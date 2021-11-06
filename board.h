@@ -1,7 +1,12 @@
-// A2DD.h
+
 #pragma once
 
+#include "defs.h"
+
 class Board{
+
+    // Put each piece location as bits
+    // where first bit is a1 ... 2nd is b1 ... 9th bit is a2
     U64 wPawnLocations;
     U64 bPawnLocations;
 
@@ -21,9 +26,8 @@ class Board{
     U64 bKingLocations;
 
     public:
-    
-        Board();
 
+        Board();
         int getSum();
 
 };

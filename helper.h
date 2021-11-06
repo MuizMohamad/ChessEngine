@@ -1,4 +1,7 @@
+
 #pragma once
+
+#include "defs.h"
 
 // get nth bit 1-based index
 // and goes from left to right
@@ -6,7 +9,7 @@
 int getNthBitFromNumber(int num,int n);
 
 // set nth bit to 1 (1-based index)
-int setNthBitFromNumber(int num,int n);
+void setNthBitFromNumber(int* num,int n);
 
 // set nth bit to 0 (1-based index)
-int clearNthBitFromNumber(int num,int n);
+void clearNthBitFromNumber(int* num,int n);
