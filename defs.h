@@ -39,7 +39,7 @@ const std::array<int,2> wKnightStart = {B1,G1};
 const std::array<int,2> bKnightStart = {B8,G8};
 
 const std::array<int,2> wBishopStart = {C1,F1};
-const std::array<int,2> bBishopStart = {C8,D8};
+const std::array<int,2> bBishopStart = {C8,F8};
 
 const std::array<int,2> wRookStart = {A1,H1};
 const std::array<int,2> bRookStart = {A8,H8};

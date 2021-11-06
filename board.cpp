@@ -82,7 +82,7 @@ Board::Board(){
 
 void Board::printBoard(){
 
-    for (int i = RANK_1 ; i <= RANK_8 ; i++){
+    for (int i = RANK_8 ; i >= RANK_1 ; i--){
         std::string current_row = "--------";
         for (int j = FILE_A ; j <= FILE_H ; j++){
             int square = 8*(i-1) + j;
@@ -102,26 +102,25 @@ char Board::getPieceAtSquare(int square){
         piece = 'P';
     }
     
-    if (getNthBitFromNumber(wBishopLocations,square) == 1 || getNthBitFromNumber(bBishopLocations,square) == 1){
+    else if (getNthBitFromNumber(wBishopLocations,square) == 1 || getNthBitFromNumber(bBishopLocations,square) == 1){
         piece = 'B';
     }
     
-    if (getNthBitFromNumber(wKnightLocations,square) == 1 || getNthBitFromNumber(bKnightLocations,square) == 1){
+    else if (getNthBitFromNumber(wKnightLocations,square) == 1 || getNthBitFromNumber(bKnightLocations,square) == 1){
         piece = 'N';
     }
     
-    if (getNthBitFromNumber(wRookLocations,square) == 1 || getNthBitFromNumber(bRookLocations,square) == 1){
+    else if (getNthBitFromNumber(wRookLocations,square) == 1 || getNthBitFromNumber(bRookLocations,square) == 1){
         piece = 'R';
     }
     
-    if (getNthBitFromNumber(wQueenLocations,square) == 1 || getNthBitFromNumber(bQueenLocations,square) == 1){
+    else if (getNthBitFromNumber(wQueenLocations,square) == 1 || getNthBitFromNumber(bQueenLocations,square) == 1){
         piece = 'Q';
     }
 
-    if (getNthBitFromNumber(wKingLocations,square) == 1 || getNthBitFromNumber(bKingLocations,square) == 1){
+    else if (getNthBitFromNumber(wKingLocations,square) == 1 || getNthBitFromNumber(bKingLocations,square) == 1){
         piece = 'K';
     }
-    
     
     return piece;
 }
