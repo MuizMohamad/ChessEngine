@@ -2,12 +2,12 @@
 #include "defs.h"
 #include "board.h"
 #include "helper.h"
+#include <limits.h>
 
 int main(){
 
-    int n = 361;
-    setNthBitFromNumber(&n,8); 
-    std::cout << n;
-   
+    Board b;
+    b.printBoard();
+    
     return 0;
 }

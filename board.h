@@ -2,6 +2,7 @@
 #pragma once
 
 #include "defs.h"
+#include "helper.h"
 
 class Board{
 
@@ -28,8 +29,8 @@ class Board{
     public:
 
         Board();
-        int getSum();
-
+        void printBoard();
+        char getPieceAtSquare(int square);
 };
 
 
