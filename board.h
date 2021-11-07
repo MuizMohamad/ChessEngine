@@ -6,14 +6,21 @@
 
 class Board{
 
+    
      // Put each piece location in square based on enum
     int pieceListInSq[13][64];
 
     int enPassantKey; // en Passant square
     int turn; // 0 for white , 1 for black
 
-    // 0000 : 4th bit - black castle queen, 3rd bit - black castle king, 2nd bi -, white castle queen , 1st - white castle king
+    // 0000 : 4th bit - black can castle queen, 3rd bit - black can castle king, 2nd -, white castle queen , 1st - white castle king
     int castlingKey; 
+
+    // current number of moves, eg after 1 c4 , current total move is 1
+    int fullMove;
+
+    // number of completed moves since last pawn capture
+    int halfMove;
 
     public:
 
@@ -22,6 +29,7 @@ class Board{
         void init_pieces();
         int getPieceAtSquare(int square);
         char pieceToChar(int piece);
+        void parsingFEN(string fen);
 };
 
 

@@ -1,12 +1,13 @@
 
 #include "board.h"
 
-
-    
 Board::Board(){
     
     enPassantKey = 0;
     turn = WHITE;
+
+    fullMove = 0;
+    halfMove = 0;
 
     for (int i = 0 ; i < 13 ; i++){
         for (int j = 0 ; j < 64 ; j++){
@@ -104,27 +105,32 @@ char Board::pieceToChar(int piece){
             return 'K';
             break;
         case bP:
-            return 'P';
+            return 'p';
             break;
         case bN:
-            return 'N';
+            return 'n';
             break;
         case bB:
-            return 'B';
+            return 'b';
             break;
         case bR:
-            return 'R';
+            return 'r';
             break;
         case bQ:
-            return 'Q';
+            return 'q';
             break;
         case bK:
-            return 'K';
+            return 'k';
             break;
         default:
             return ' ';
             break;
 
     };
+
+}
+
+
+void Board::parsingFEN(string fen){
 
 }
