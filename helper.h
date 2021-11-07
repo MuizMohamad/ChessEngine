@@ -13,3 +13,11 @@ void setNthBitFromNumber(U64* num,int n);
 
 // set nth bit to 0 (1-based index)
 void clearNthBitFromNumber(U64* num,int n);
+
+char pieceToChar(int piece);
+
+int charToPiece(char ch);
+
+std::vector<std::string> split_string(std::string fen,std::string delimiter);
+
+int sqStrToSq(std::string sq);

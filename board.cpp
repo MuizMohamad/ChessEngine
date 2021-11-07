@@ -3,22 +3,28 @@
 
 Board::Board(){
     
-    enPassantKey = 0;
+    enPassantSquare = 0;
     turn = WHITE;
 
     fullMove = 0;
     halfMove = 0;
 
-    for (int i = 0 ; i < 13 ; i++){
-        for (int j = 0 ; j < 64 ; j++){
-            pieceListInSq[i][j] = 0;
-        }
-    }
+    // 1111 for castling
+    castlingKey = 15;
+
+    empty_board();
     
     init_pieces();
     
 }
 
+void Board::empty_board(){
+    for (int i = 0 ; i < 13 ; i++){
+        for (int j = 1 ; j <= 64 ; j++){
+            pieceListInSq[i][j] = 0;
+        }
+    }
+}
 void Board::init_pieces(){
     // initiate pawns
     for (int i = 0 ; i < 8 ; i++){
@@ -57,14 +63,15 @@ void Board::init_pieces(){
     }
 }
 
-void Board::printBoard(){
+void Board::print_board(){
 
     std::cout << "--------\n";
-    for (int i = RANK_8 ; i >= RANK_1 ; i--){
+    // print from up to down so start from rank 8 till rank 1
+    for (int rank = RANK_8 ; rank >= RANK_1 ; rank--){
         std::string current_row = "--------";
-        for (int j = FILE_A ; j <= FILE_H ; j++){
-            int square = 8*(i-1) + j;
-            current_row[j-1] = pieceToChar(getPieceAtSquare(square));
+        for (int file = FILE_A ; file <= FILE_H ; file++){
+            int square = 8*(rank-1) + file;
+            current_row[file-1] = pieceToChar(getPieceAtSquare(square));
         }
 
         std::cout << current_row << "\n";
@@ -84,53 +91,94 @@ int Board::getPieceAtSquare(int square){
     return piece;
 }
 
-char Board::pieceToChar(int piece){
-    switch (piece){
-        case wP:
-            return 'P';
-            break;
-        case wN:
-            return 'N';
-            break;
-        case wB:
-            return 'B';
-            break;
-        case wR:
-            return 'R';
-            break;
-        case wQ:
-            return 'Q';
-            break;
-        case wK:
-            return 'K';
-            break;
-        case bP:
-            return 'p';
-            break;
-        case bN:
-            return 'n';
-            break;
-        case bB:
-            return 'b';
-            break;
-        case bR:
-            return 'r';
-            break;
-        case bQ:
-            return 'q';
-            break;
-        case bK:
-            return 'k';
-            break;
-        default:
-            return ' ';
-            break;
 
-    };
+void Board::parsingFEN(std::string fen){
 
-}
+    std::vector<std::string> fen_split = split_string(fen," ");
 
+    assert (fen_split.size() == 6);
+    std::string piecePosStr = fen_split.at(0);
+    std::vector<std::string> each_lines = split_string(piecePosStr,"/");
 
-void Board::parsingFEN(string fen){
+    // empty board
+    empty_board();
+    int count = 0;
+    for (int rank = RANK_8 ; rank >= RANK_1 ; rank--){
+        
+        std::string line = each_lines.at(8-rank);
+        int line_size = line.size();
 
+        int file = FILE_A;
+
+        for (int i = 0 ; i < line_size ; i++){
+            int square = 8*(rank-1) + file;
+            if (isalpha(line[i])){
+                int piece = charToPiece(line[i]);
+                
+                pieceListInSq[piece][square] = 1 ;
+                file++;
+            }
+            else if (isdigit(line[i])){
+                file += int(line[i]) - '0';
+            }
+        }
+    }
+
+    
+
+    // parse current turn
+    std::string turnFen = fen_split.at(1);
+    if (turnFen == "w") turn = WHITE;
+    else if (turnFen == "b") turn = BLACK;
+    
+    // parse castling status
+    std::string castling_status = fen_split.at(2);
+
+    // white can castle kingside
+    if (castling_status.find('K') != std::string::npos){
+        setNthBitFromNumber(&castlingKey,0);
+    }
+    else {
+        clearNthBitFromNumber(&castlingKey,0);
+    }
+
+    // white can castle queenside
+    if (castling_status.find('Q') != std::string::npos){
+        setNthBitFromNumber(&castlingKey,1);
+    }
+    else {
+        clearNthBitFromNumber(&castlingKey,1);
+    }
+
+    // black can castle kingside
+    if (castling_status.find('k') != std::string::npos){
+        setNthBitFromNumber(&castlingKey,2);
+    }
+    else {
+        clearNthBitFromNumber(&castlingKey,2);
+    }
+
+    // black can castle queenside
+    if (castling_status.find('K') != std::string::npos){
+        setNthBitFromNumber(&castlingKey,3);
+    }
+    else {
+        clearNthBitFromNumber(&castlingKey,4);
+    }         
+
+    // parse en passant
+    std::string enPasStr = fen_split.at(3);
+
+    if (enPasStr == "-"){
+        enPassantSquare = 0;
+    }
+    else{
+        enPassantSquare = sqStrToSq(enPasStr);
+    }
+
+    // parse half-move counter
+    halfMove = std::stoi(fen_split[4]);
+
+    // parse full-move
+    fullMove = std::stoi(fen_split[5]);
 }
