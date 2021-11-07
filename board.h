@@ -6,31 +6,22 @@
 
 class Board{
 
-    // Put each piece location as bits
-    // where first bit is a1 ... 2nd is b1 ... 9th bit is a2
-    U64 wPawnLocations;
-    U64 bPawnLocations;
+     // Put each piece location in square based on enum
+    int pieceListInSq[13][64];
 
-    U64 wBishopLocations;
-    U64 bBishopLocations;
+    int enPassantKey; // en Passant square
+    int turn; // 0 for white , 1 for black
 
-    U64 wKnightLocations;
-    U64 bKnightLocations;
-
-    U64 wRookLocations;
-    U64 bRookLocations;
-
-    U64 wQueenLocations;
-    U64 bQueenLocations;
-
-    U64 wKingLocations;
-    U64 bKingLocations;
+    // 0000 : 4th bit - black castle queen, 3rd bit - black castle king, 2nd bi -, white castle queen , 1st - white castle king
+    int castlingKey; 
 
     public:
 
         Board();
         void printBoard();
-        char getPieceAtSquare(int square);
+        void init_pieces();
+        int getPieceAtSquare(int square);
+        char pieceToChar(int piece);
 };
 
 

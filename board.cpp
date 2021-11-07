@@ -4,123 +4,127 @@
 
     
 Board::Board(){
-    wPawnLocations = 0ULL;
-    bPawnLocations = 0ULL;
+    
+    enPassantKey = 0;
+    turn = WHITE;
 
-    wBishopLocations = 0ULL;
-    bBishopLocations = 0ULL;
+    for (int i = 0 ; i < 13 ; i++){
+        for (int j = 0 ; j < 64 ; j++){
+            pieceListInSq[i][j] = 0;
+        }
+    }
+    
+    init_pieces();
+    
+}
 
-    wKnightLocations = 0ULL;
-    bKnightLocations = 0ULL;
-
-    wRookLocations = 0ULL;
-    bRookLocations = 0ULL;
-
-    wQueenLocations = 0ULL;
-    bQueenLocations = 0ULL;
-
-    wKingLocations = 0ULL;
-    bKingLocations = 0ULL;
-
+void Board::init_pieces(){
     // initiate pawns
-    for (int square : wPawnStart){
-        setNthBitFromNumber(&wPawnLocations,square);
+    for (int i = 0 ; i < 8 ; i++){
+        pieceListInSq[wP][wPawnStart[i]] = 1;
+        pieceListInSq[bP][bPawnStart[i]] = 1;
     }
-    //std::cout << wPawnLocations;
-    for (int square : bPawnStart){
-        setNthBitFromNumber(&bPawnLocations,square);
-    }
-
+ 
     // initiate knight
-    for (int square : wKnightStart){
-        setNthBitFromNumber(&wKnightLocations,square);
-    }
-
-    for (int square : bKnightStart){
-        setNthBitFromNumber(&bKnightLocations,square);
+    for (int i = 0 ; i < 2 ; i++){
+        pieceListInSq[wN][wKnightStart[i]] = 1;
+        pieceListInSq[bN][bKnightStart[i]] = 1;
     }
 
     // initiate bishop
-    for (int square : wBishopStart){
-        setNthBitFromNumber(&wBishopLocations,square);
-    }
-
-    for (int square : bBishopStart){
-        setNthBitFromNumber(&bBishopLocations,square);
+    for (int i = 0 ; i < 2 ; i++){
+        pieceListInSq[wB][wBishopStart[i]] = 1;
+        pieceListInSq[bB][bBishopStart[i]] = 1;
     }
 
     // initiate rook
-    for (int square : wRookStart){
-        setNthBitFromNumber(&wRookLocations,square);
-    }
-
-    for (int square : bRookStart){
-        setNthBitFromNumber(&bRookLocations,square);
+    for (int i = 0 ; i < 2 ; i++){
+        pieceListInSq[wR][wRookStart[i]] = 1;
+        pieceListInSq[bR][bRookStart[i]] = 1;
     }
 
     // initiate queen
-    for (int square : wQueenStart){
-        setNthBitFromNumber(&wQueenLocations,square);
-    }
-
-    for (int square : bQueenStart){
-        setNthBitFromNumber(&bQueenLocations,square);
+    for (int i = 0 ; i < 1 ; i++){
+        pieceListInSq[wQ][wQueenStart[i]] = 1;
+        pieceListInSq[bQ][bQueenStart[i]] = 1;
     }
 
     // initiate king
-    for (int square : wKingStart){
-        setNthBitFromNumber(&wKingLocations,square);
-    }
-
-    for (int square : bKingStart){
-        setNthBitFromNumber(&bKingLocations,square);
+    for (int i = 0 ; i < 1 ; i++){
+        pieceListInSq[wK][wKingStart[i]] = 1;
+        pieceListInSq[bK][bKingStart[i]] = 1;
     }
 }
 
-//void Board::init_pieces(){
-//}
-
 void Board::printBoard(){
 
+    std::cout << "--------\n";
     for (int i = RANK_8 ; i >= RANK_1 ; i--){
         std::string current_row = "--------";
         for (int j = FILE_A ; j <= FILE_H ; j++){
             int square = 8*(i-1) + j;
-            current_row[j-1] = getPieceAtSquare(square);
+            current_row[j-1] = pieceToChar(getPieceAtSquare(square));
         }
 
         std::cout << current_row << "\n";
     }
-
+    std::cout << "--------\n";
 }
 
-char Board::getPieceAtSquare(int square){
+int Board::getPieceAtSquare(int square){
 
-    char piece = ' ';
-
-    if (getNthBitFromNumber(wPawnLocations,square) == 1 || getNthBitFromNumber(bPawnLocations,square) == 1){
-        piece = 'P';
-    }
-    
-    else if (getNthBitFromNumber(wBishopLocations,square) == 1 || getNthBitFromNumber(bBishopLocations,square) == 1){
-        piece = 'B';
-    }
-    
-    else if (getNthBitFromNumber(wKnightLocations,square) == 1 || getNthBitFromNumber(bKnightLocations,square) == 1){
-        piece = 'N';
-    }
-    
-    else if (getNthBitFromNumber(wRookLocations,square) == 1 || getNthBitFromNumber(bRookLocations,square) == 1){
-        piece = 'R';
-    }
-    
-    else if (getNthBitFromNumber(wQueenLocations,square) == 1 || getNthBitFromNumber(bQueenLocations,square) == 1){
-        piece = 'Q';
-    }
-
-    else if (getNthBitFromNumber(wKingLocations,square) == 1 || getNthBitFromNumber(bKingLocations,square) == 1){
-        piece = 'K';
+    int piece = EMPTY;
+    for (int i = 0; i < 13; i++){
+        if (pieceListInSq[i][square] == 1){
+            return i;
+        }
     }
     
     return piece;
+}
+
+char Board::pieceToChar(int piece){
+    switch (piece){
+        case wP:
+            return 'P';
+            break;
+        case wN:
+            return 'N';
+            break;
+        case wB:
+            return 'B';
+            break;
+        case wR:
+            return 'R';
+            break;
+        case wQ:
+            return 'Q';
+            break;
+        case wK:
+            return 'K';
+            break;
+        case bP:
+            return 'P';
+            break;
+        case bN:
+            return 'N';
+            break;
+        case bB:
+            return 'B';
+            break;
+        case bR:
+            return 'R';
+            break;
+        case bQ:
+            return 'Q';
+            break;
+        case bK:
+            return 'K';
+            break;
+        default:
+            return ' ';
+            break;
+
+    };
+
 }

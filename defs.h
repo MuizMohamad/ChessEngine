@@ -18,6 +18,7 @@ enum { WHITE , BLACK , BOTH };
 enum { FALSE , TRUE };
 
 enum {
+    
     A1 = 1  , B1 , C1 , D1 , E1 , F1 , G1 , H1 ,
     A2 = 9  , B2 , C2 , D2 , E2 , F2 , G2 , H2 ,
     A3 = 17 , B3 , C3 , D3 , E3 , F3 , G3 , H3 ,
@@ -29,8 +30,7 @@ enum {
 };
 
 
-
-// constant starting piece square
+// constant starting square of pieces
 
 const std::array<int,8> wPawnStart = {A2,B2,C2,D2,E2,F2,G2,H2};
 const std::array<int,8> bPawnStart = {A7,B7,C7,D7,E7,F7,G7,H7};
