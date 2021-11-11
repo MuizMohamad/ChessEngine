@@ -122,6 +122,22 @@ std::vector<std::string> split_string(std::string str,std::string delimiter){
     return tokens;
 }
 
+
+std::string sqToSqStr(int sq){
+    int nth_rank = sq/8 + 1;
+    int nth_file = sq - (8*(nth_rank-1));
+
+    char file_char = 'a' + (nth_file- 1);
+    char rank_char = '1' + (nth_rank - 1);
+
+    std::string ans = "";
+
+    ans.push_back(file_char);
+    ans.push_back(rank_char);
+
+    return ans;
+}
+
 int sqStrToSq(std::string sq){
     int file = int(sq[0]) - 96;
     int rank = int(sq[1]) - 48;
@@ -129,3 +145,13 @@ int sqStrToSq(std::string sq){
     int square = 8*(rank-1) + file;
     return square;
 }
+
+/*
+std::vector<int> getRightDiagonalSq(int sq){
+    
+}
+
+std::vector<int> getRightDiagonalSq(int sq){
+    
+}
+*/

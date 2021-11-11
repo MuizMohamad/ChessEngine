@@ -182,3 +182,13 @@ void Board::parsingFEN(std::string fen){
     // parse full-move
     fullMove = std::stoi(fen_split[5]);
 }
+
+// return
+bool Board::squareAttacked(int square){
+
+    // check diagonal for bishop / queen
+    // check horizontal for bishop / queen
+    // check l shape for knight
+    // check one diagonal for pawn/king
+    // check one horizontal for king
+}

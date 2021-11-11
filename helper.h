@@ -20,4 +20,11 @@ int charToPiece(char ch);
 
 std::vector<std::string> split_string(std::string fen,std::string delimiter);
 
+std::string sqToSqStr(int sq);
+
 int sqStrToSq(std::string sq);
+
+//td::vector<int> getRightDiagonalSq(int sq);
+
+//std::vector<int> getLeftDiagonalSq(int sq);
+
