@@ -53,6 +53,8 @@ const std::array<int,1> bQueenStart = {D8};
 const std::array<int,1> wKingStart = {E1};
 const std::array<int,1> bKingStart = {E8};
 
+const std::array<int,4> diagonal_direction = {+9,-9,+7,-7};
+const std::array<int,4> horizontal_direction = {-1,+1,+8,-8};
 
 
 

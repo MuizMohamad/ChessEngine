@@ -14,7 +14,7 @@ int main(){
     b.parsingFEN(FEN);
 
     b.print_board();
-    std::cout << b.squareAttacked(D5);
+    std::cout << b.squareAttacked(D5,BLACK);
 
     return 0;
 }

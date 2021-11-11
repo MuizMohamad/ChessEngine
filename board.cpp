@@ -24,6 +24,10 @@ void Board::empty_board(){
             pieceListInSq[i][j] = 0;
         }
     }
+
+    for (int i = 0 ; i <= 65 ; i++){
+        piecesInSq[i] = EMPTY;
+    }
 }
 void Board::init_pieces(){
 
@@ -36,36 +40,55 @@ void Board::init_pieces(){
     for (int i = 0 ; i < 8 ; i++){
         pieceListInSq[wP][wPawnStart[i]] = 1;
         pieceListInSq[bP][bPawnStart[i]] = 1;
+
+        piecesInSq[wPawnStart[i]] = wP;
+        piecesInSq[bPawnStart[i]] = bP;
     }
  
     // initiate knight
     for (int i = 0 ; i < 2 ; i++){
         pieceListInSq[wN][wKnightStart[i]] = 1;
         pieceListInSq[bN][bKnightStart[i]] = 1;
+
+        piecesInSq[wKnightStart[i]] = wN;
+        piecesInSq[bKnightStart[i]] = bN;
+
     }
 
     // initiate bishop
     for (int i = 0 ; i < 2 ; i++){
         pieceListInSq[wB][wBishopStart[i]] = 1;
         pieceListInSq[bB][bBishopStart[i]] = 1;
+
+        piecesInSq[wBishopStart[i]] = wB;
+        piecesInSq[bBishopStart[i]] = bB;
     }
 
     // initiate rook
     for (int i = 0 ; i < 2 ; i++){
         pieceListInSq[wR][wRookStart[i]] = 1;
         pieceListInSq[bR][bRookStart[i]] = 1;
+
+        piecesInSq[wRookStart[i]] = wR;
+        piecesInSq[bRookStart[i]] = bR;
     }
 
     // initiate queen
     for (int i = 0 ; i < 1 ; i++){
         pieceListInSq[wQ][wQueenStart[i]] = 1;
         pieceListInSq[bQ][bQueenStart[i]] = 1;
+
+        piecesInSq[wQueenStart[i]] = wQ;
+        piecesInSq[bQueenStart[i]] = bQ;
     }
 
     // initiate king
     for (int i = 0 ; i < 1 ; i++){
         pieceListInSq[wK][wKingStart[i]] = 1;
         pieceListInSq[bK][bKingStart[i]] = 1;
+
+        piecesInSq[wKingStart[i]] = wK;
+        piecesInSq[bKingStart[i]] = bK;
     }
 }
 
@@ -87,14 +110,7 @@ void Board::print_board(){
 
 int Board::getPieceAtSquare(int square){
 
-    int piece = EMPTY;
-    for (int i = 0; i < 13; i++){
-        if (pieceListInSq[i][square] == 1){
-            return i;
-        }
-    }
-    
-    return piece;
+    return piecesInSq[square];
 }
 
 
@@ -122,6 +138,7 @@ void Board::parsingFEN(std::string fen){
                 int piece = charToPiece(line[i]);
                 
                 pieceListInSq[piece][square] = 1 ;
+                piecesInSq[square] = piece;
                 file++;
             }
             else if (isdigit(line[i])){
@@ -189,32 +206,29 @@ void Board::parsingFEN(std::string fen){
     fullMove = std::stoi(fen_split[5]);
 }
 
-// check based on the current turn,
-// that is if E4 with turn white, then check if black pieces attack the square
-bool Board::squareAttacked(int square){
+// check based on the defending side,
+// that is if E4 with defending side white, then check if black piece attack the square E4
+bool Board::squareAttacked(int square, int defending_side){
 
-    int piece_color = turn;
-    
+    int piece_color = defending_side;
+
     // check diagonal for bishop / queen
-    std::vector<int> diagonal_squares = getAllDiagonalSq(square);
 
     std::vector<int> opp_bishop_queen = {bB,bQ};
     if (piece_color == BLACK) opp_bishop_queen = {wB,wQ};
 
-    for (int d_sq : diagonal_squares){
+    int opp_bishop = opp_bishop_queen.at(0);
+    int opp_queen = opp_bishop_queen.at(1);
+
+    for (int direction : diagonal_direction){
         
-        int opp_bishop = opp_bishop_queen.at(0);
-        int opp_queen = opp_bishop_queen.at(1);
-
-        if (pieceListInSq[opp_bishop][d_sq] == 1){
-            std::cout << "Bishop attack" << "\n";
-            return true;
-        }
-        if (pieceListInSq[opp_queen][d_sq] == 1){
-            std::cout << "Queen attack" << "\n";
-            return true;
+        int cur_sq = square;
+        while(piecesInSq[cur_sq+direction] != EMPTY && checkInsideBoard(cur_sq + direction)){
+            cur_sq = cur_sq + direction;
         }
 
+        bool queen_or_bishop = piecesInSq[cur_sq] == opp_bishop || piecesInSq[cur_sq] == opp_queen;
+        if (checkInsideBoard(cur_sq) && queen_or_bishop) return true;
     }
     
     // check horizontal for rook / queen
@@ -223,20 +237,17 @@ bool Board::squareAttacked(int square){
     std::vector<int> opp_rook_queen = {bR,bQ};
     if (piece_color == BLACK) opp_rook_queen = {wR,wQ};
 
-    for (int h_sq : horizontal_squares){
+    int opp_rook = opp_rook_queen.at(0);
+
+     for (int direction : horizontal_direction){
         
-        int opp_rook = opp_rook_queen.at(0);
-        int opp_queen = opp_rook_queen.at(1);
-
-        if (pieceListInSq[opp_rook][h_sq] == 1){
-            std::cout << "Rook attack" << "\n";
-            return true;
-        }
-        if (pieceListInSq[opp_queen][h_sq] == 1){
-            std::cout << "Queen attack" << "\n";
-            return true;
+        int cur_sq = square;
+        while(piecesInSq[cur_sq+direction] != EMPTY && checkInsideBoard(cur_sq + direction)){
+            cur_sq = cur_sq + direction;
         }
 
+        bool queen_or_bishop = piecesInSq[cur_sq] == opp_rook || piecesInSq[cur_sq] == opp_queen;
+        if (checkInsideBoard(cur_sq) && queen_or_bishop) return true;
     }
 
    

@@ -10,6 +10,7 @@ class Board{
      // Put each piece location in square based on enum
      // extra 65 for square 1-64
     int pieceListInSq[13][65];
+    int piecesInSq[65];
 
     U64 enPassantSquare; // en Passant square
     U64 turn; // 0 for white , 1 for black
@@ -31,7 +32,7 @@ class Board{
         void init_pieces();
         int getPieceAtSquare(int square);
         void parsingFEN(std::string fen);
-        bool squareAttacked(int square);
+        bool squareAttacked(int square, int attacking_side);
         
 };
 
