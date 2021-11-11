@@ -26,6 +26,12 @@ void Board::empty_board(){
     }
 }
 void Board::init_pieces(){
+
+    // initiate empty space
+    for (int i = A3 ; i <= H6 ; i++ ){
+        pieceListInSq[0][i] = 1;
+    }
+
     // initiate pawns
     for (int i = 0 ; i < 8 ; i++){
         pieceListInSq[wP][wPawnStart[i]] = 1;
@@ -183,12 +189,99 @@ void Board::parsingFEN(std::string fen){
     fullMove = std::stoi(fen_split[5]);
 }
 
-// return
+// check based on the current turn,
+// that is if E4 with turn white, then check if black pieces attack the square
 bool Board::squareAttacked(int square){
 
+    int piece_color = turn;
+    
     // check diagonal for bishop / queen
-    // check horizontal for bishop / queen
+    std::vector<int> diagonal_squares = getAllDiagonalSq(square);
+
+    std::vector<int> opp_bishop_queen = {bB,bQ};
+    if (piece_color == BLACK) opp_bishop_queen = {wB,wQ};
+
+    for (int d_sq : diagonal_squares){
+        
+        int opp_bishop = opp_bishop_queen.at(0);
+        int opp_queen = opp_bishop_queen.at(1);
+
+        if (pieceListInSq[opp_bishop][d_sq] == 1){
+            std::cout << "Bishop attack" << "\n";
+            return true;
+        }
+        if (pieceListInSq[opp_queen][d_sq] == 1){
+            std::cout << "Queen attack" << "\n";
+            return true;
+        }
+
+    }
+    
+    // check horizontal for rook / queen
+    std::vector<int> horizontal_squares = getAllHorizontalSq(square);
+
+    std::vector<int> opp_rook_queen = {bR,bQ};
+    if (piece_color == BLACK) opp_rook_queen = {wR,wQ};
+
+    for (int h_sq : horizontal_squares){
+        
+        int opp_rook = opp_rook_queen.at(0);
+        int opp_queen = opp_rook_queen.at(1);
+
+        if (pieceListInSq[opp_rook][h_sq] == 1){
+            std::cout << "Rook attack" << "\n";
+            return true;
+        }
+        if (pieceListInSq[opp_queen][h_sq] == 1){
+            std::cout << "Queen attack" << "\n";
+            return true;
+        }
+
+    }
+
+   
     // check l shape for knight
-    // check one diagonal for pawn/king
-    // check one horizontal for king
+    std::vector<int> knight_attack_sq = getKnightSqAround(square);
+
+    int opp_knight = bN;
+    if (piece_color == BLACK) opp_knight = wN;
+
+    for (int n_sq : knight_attack_sq){
+        
+        if (pieceListInSq[opp_knight][n_sq] == 1){
+            std::cout << "Knight attack" << "\n";
+            return true;
+        }
+    }
+
+    // check for pawn attack 
+    std::vector<int> pawn_attack_sq = getOppPawnAttackSq(square,piece_color);
+
+    int opp_pawn = bP;
+    if (piece_color == BLACK) opp_pawn = wP;
+
+    for (int p_sq : pawn_attack_sq){
+        
+        if (pieceListInSq[opp_pawn][p_sq] == 1){
+            std::cout << "Pawn attack" << "\n";
+            return true;
+        }
+    }
+
+    // check for king attack
+    std::vector<int> king_attack_sq = getAllSquareAround(square);
+
+    int opp_king = bK;
+    if (piece_color == BLACK) opp_king = wK;
+
+    for (int k_sq : king_attack_sq){
+        
+        if (pieceListInSq[opp_king][k_sq] == 1){
+            std::cout << "King attack" << "\n";
+            return true;
+        }
+    }
+    
+     return false;
 }
+

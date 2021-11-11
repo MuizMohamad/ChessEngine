@@ -32,6 +32,7 @@ class Board{
         int getPieceAtSquare(int square);
         void parsingFEN(std::string fen);
         bool squareAttacked(int square);
+        
 };
 
 
