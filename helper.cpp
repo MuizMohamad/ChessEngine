@@ -122,14 +122,14 @@ std::vector<std::string> split_string(std::string str,std::string delimiter){
     return tokens;
 }
 
-
 std::string sqToSqStr(int sq){
-    int nth_rank = sq/8 + 1;
+
+    int nth_rank = ceil(sq*1.0/8);
     int nth_file = sq - (8*(nth_rank-1));
 
     char file_char = 'a' + (nth_file- 1);
     char rank_char = '1' + (nth_rank - 1);
-
+   
     std::string ans = "";
 
     ans.push_back(file_char);
@@ -146,12 +146,183 @@ int sqStrToSq(std::string sq){
     return square;
 }
 
-/*
-std::vector<int> getRightDiagonalSq(int sq){
-    
+bool checkInsideBoard(std::string sq){
+
+    char file = sq[0];
+    char rank = sq[1];
+
+    bool checkFile = int(file) >= 'a' && int(file) <= 'h';
+    bool checkRank = int(rank) >= '1' && int(rank) <= '8';
+
+    return checkFile && checkRank;
+}
+
+bool checkInsideBoard(int sq){
+    return checkInsideBoard(sqToSqStr(sq));
 }
 
 std::vector<int> getRightDiagonalSq(int sq){
     
+    std::vector<int> all_diagonals = {};
+
+    std::string sq_str = sqToSqStr(sq);
+
+     // going up right
+    char file_up = sq_str[0] + 1;
+    char rank_up = sq_str[1] + 1;
+
+    std::string up_square = std::string(1,file_up) + std::string(1,rank_up);
+   
+    while(checkInsideBoard(up_square)){
+
+        all_diagonals.push_back(sqStrToSq(up_square));
+
+        file_up = file_up + 1;
+        rank_up = rank_up + 1; 
+
+        up_square = std::string(1,file_up) + std::string(1,rank_up);
+    }
+
+    // gping down left
+    char file_down = sq_str[0] - 1;
+    char rank_down = sq_str[1] - 1;
+
+    std::string down_square = std::string(1,file_down) + std::string(1,rank_down);
+
+    while(checkInsideBoard(down_square)){
+
+        all_diagonals.push_back(sqStrToSq(down_square));
+
+        file_down = file_down - 1;
+        rank_down = rank_down - 1; 
+
+        down_square = std::string(1,file_down) + std::string(1,rank_down);
+        
+    }
+
+    return all_diagonals;
 }
-*/
+
+std::vector<int> getLeftDiagonalSq(int sq){
+    
+    std::vector<int> all_diagonals = {};
+
+    std::string sq_str = sqToSqStr(sq);
+
+    // going up left
+    char file_up = sq_str[0] - 1;
+    char rank_up = sq_str[1] + 1;
+
+    std::string up_square = std::string(1,file_up) + std::string(1,rank_up);
+ 
+    while(checkInsideBoard(up_square)){
+
+        all_diagonals.push_back(sqStrToSq(up_square));
+
+        file_up = file_up - 1;
+        rank_up = rank_up + 1; 
+
+        up_square = std::string(1,file_up) + std::string(1,rank_up);
+    }
+
+    // going down right
+    char file_down = sq_str[0] + 1;
+    char rank_down = sq_str[1] - 1;
+
+     std::string down_square = std::string(1,file_down) + std::string(1,rank_down);
+
+    while(checkInsideBoard(down_square)){
+
+        all_diagonals.push_back(sqStrToSq(down_square));
+
+        file_down = file_down + 1;
+        rank_down = rank_down - 1; 
+
+        down_square = std::string(1,file_down) + std::string(1,rank_down);
+    }
+
+    return all_diagonals;
+
+}
+
+std::vector<int> getUpDownHorizontalSq(int sq){
+    std::vector<int> all_horizontal = {};
+
+    std::string sq_str = sqToSqStr(sq);
+
+    // going up left
+    char file_up = sq_str[0] + 0;
+    char rank_up = sq_str[1] + 1;
+
+    std::string up_square = std::string(1,file_up) + std::string(1,rank_up);
+ 
+    while(checkInsideBoard(up_square)){
+
+         all_horizontal.push_back(sqStrToSq(up_square));
+
+        file_up = file_up + 0;
+        rank_up = rank_up + 1; 
+
+        up_square = std::string(1,file_up) + std::string(1,rank_up);
+    }
+
+    // going down right
+    char file_down = sq_str[0] + 0;
+    char rank_down = sq_str[1] - 1;
+
+     std::string down_square = std::string(1,file_down) + std::string(1,rank_down);
+
+    while(checkInsideBoard(down_square)){
+
+        all_horizontal.push_back(sqStrToSq(down_square));
+
+        file_down = file_down + 0;
+        rank_down = rank_down - 1; 
+
+        down_square = std::string(1,file_down) + std::string(1,rank_down);
+    }
+
+    return  all_horizontal;
+}
+
+std::vector<int> getLeftRightHorizontalSq(int sq){
+
+    std::vector<int> all_horizontal = {};
+
+    std::string sq_str = sqToSqStr(sq);
+
+    // going up left
+    char file_up = sq_str[0] + 1;
+    char rank_up = sq_str[1] + 0;
+
+    std::string up_square = std::string(1,file_up) + std::string(1,rank_up);
+ 
+    while(checkInsideBoard(up_square)){
+
+         all_horizontal.push_back(sqStrToSq(up_square));
+
+        file_up = file_up + 1;
+        rank_up = rank_up + 0; 
+
+        up_square = std::string(1,file_up) + std::string(1,rank_up);
+    }
+
+    // going down right
+    char file_down = sq_str[0] - 1;
+    char rank_down = sq_str[1] + 0;
+
+     std::string down_square = std::string(1,file_down) + std::string(1,rank_down);
+
+    while(checkInsideBoard(down_square)){
+
+        all_horizontal.push_back(sqStrToSq(down_square));
+
+        file_down = file_down - 1;
+        rank_down = rank_down + 0; 
+
+        down_square = std::string(1,file_down) + std::string(1,rank_down);
+    }
+
+    return  all_horizontal;
+
+}

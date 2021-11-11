@@ -6,8 +6,10 @@
 #include <vector>
 #include <array>
 #include <string>
+#include <cstring>
 #include <sstream>
 #include <cassert>
+#include <math.h>
 
 // Typedef for short form
 typedef unsigned long long U64;

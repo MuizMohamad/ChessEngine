@@ -6,6 +6,13 @@
 
 int main(){
 
-    std::cout << sqToSqStr(34) ;
+    
+
+    
+    std::vector<int> allE4diagonals = getLeftRightHorizontalSq(E4);
+    for (int sq : allE4diagonals){
+        std::cout << sqToSqStr(sq) << "\n";
+    }
+    
     return 0;
 }
