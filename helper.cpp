@@ -1,5 +1,5 @@
 
-#include "helper.h"
+#include "helper.hpp"
 
 int getNthBitFromNumber(U64 num,int n){
     return (num >> (n-1)) & 1;

@@ -1,5 +1,5 @@
 
-#include "init.h"
+#include "init.hpp"
 
 // extern variables needs have to have one .cpp file that defines it
 std::array<int,BOARD_SQ_NUM+1> Sq120_to_Sq64;

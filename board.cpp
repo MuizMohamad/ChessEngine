@@ -1,5 +1,5 @@
 
-#include "board.h"
+#include "board.hpp"
 
 Board::Board(){
     
@@ -270,8 +270,8 @@ bool Board::squareAttacked(int square, int defending_side){
     int opp_pawn = bP;
     if (piece_color == BLACK) opp_pawn = wP;
 
-    std::array<int,2> correct_direction = b_pawn_direction;
-    if (defending_side = BLACK) correct_direction = w_pawn_direction;
+    std::array<int,2> correct_direction = b_pawn_atk_direction;
+    if (defending_side = BLACK) correct_direction = w_pawn_atk_direction;
 
     for (int direction : correct_direction){
         int new_sq120 = square + direction;

@@ -1,8 +1,9 @@
 
-#include "defs.h"
-#include "init.h"
-#include "board.h"
-#include "helper.h"
+#include "defs.hpp"
+#include "init.hpp"
+#include "board.hpp"
+#include "moves.hpp"
+#include "helper.hpp"
 
 int main(){
 
