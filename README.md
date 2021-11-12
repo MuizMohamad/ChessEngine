@@ -13,6 +13,7 @@ https://www.chessprogramming.org/Main_Page
 
 This project is currently in early development.  
 Currently setting up move generation.
+Project build are not being set up currently since chess programming aspect are being prioritized  
 
 ## PROGRESS  
 Board representation - DONE  
