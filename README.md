@@ -1,13 +1,20 @@
 ## Chess Engine
 
-Chess Engine implementation
+Chess Engine created for learning purposes to explore the world of chess programming
+  
+Learning resources :
+
+1. Bluefever Software   
+https://www.youtube.com/watch?v=bGAfaepBco4&list=PLZ1QII7yudbc-Ky058TEaOstZHVbT-2hg&index=2&ab_channel=BluefeverSoftware  
+2. ChessProgramming Wiki  
+https://www.chessprogramming.org/Main_Page  
 
 ## Project Status
 
 This project is currently in early development.  
 Currently setting up move generation.
 
-PROGRESS:  
+## PROGRESS  
 Board representation - DONE  
 Parse FEN - DONE  
 Print board - DONE  
