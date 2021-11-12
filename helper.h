@@ -16,23 +16,12 @@ char pieceToChar(int piece);
 int charToPiece(char ch);
 std::vector<std::string> split_string(std::string fen,std::string delimiter);
 
-std::string sqToSqStr(int sq);
-int sqStrToSq(std::string sq);
+std::string sq64ToSqStr(int sq);
+int sqStrToSq64(std::string sq);
 
 bool checkInsideBoard(std::string sq);
 bool checkInsideBoard(int sq);
 
-std::vector<int> getRightDiagonalSq(int sq);
-std::vector<int> getLeftDiagonalSq(int sq);
-std::vector<int> getAllDiagonalSq(int sq);
-
-std::vector<int> getUpDownHorizontalSq(int sq);
-std::vector<int> getLeftRightHorizontalSq(int sq);
-std::vector<int> getAllHorizontalSq(int sq);
-
-std::vector<int> getAllSquareAround(int sq);
-std::vector<int> getOppPawnAttackSq(int sq,int color);
-std::vector<int> getKnightSqAround(int sq);
-
 int getPieceColor(int piece);
 std::string combineFileRankStr(char file,char rank);
+

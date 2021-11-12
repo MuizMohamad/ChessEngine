@@ -2,11 +2,19 @@
 #include "defs.h"
 #include "board.h"
 #include "helper.h"
-
+#include "init.h"
 
 int main(){
 
+    InitSq120To64();
 
+    std::string test = "e4";
+    int sqtest64 = sqStrToSq64(test);
+    int sqtest120 = Sq64_to_Sq120[sqtest64];
+
+    std::cout << sqtest120 << "\n";
+
+    /*
     Board b;
     b.print_board();
 
@@ -15,6 +23,7 @@ int main(){
 
     b.print_board();
     std::cout << b.squareAttacked(D5,BLACK);
+    */
 
     return 0;
 }
