@@ -64,9 +64,9 @@ const std::array<int,8> king_direction = { -1, 1, -10, 10, -9, 9, -11, 11};
 const std::array<int,2> w_pawn_direction = {-11,-9};
 const std::array<int,2> b_pawn_direction = {+11,+9};
 
-
+// extern for init.h
 // direct convert between sq64 with sq120 with array
-std::vector<int> Sq120_to_Sq64(BOARD_SQ_NUM);
-std::vector<int> Sq64_to_Sq120(64);
+extern std::array<int,BOARD_SQ_NUM+1> Sq120_to_Sq64;
+extern std::array<int,65> Sq64_to_Sq120;
 
 
