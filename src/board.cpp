@@ -212,6 +212,9 @@ void Board::parsingFEN(std::string fen){
 // that is if E4 with defending side white, then check if black piece attack the square E4
 bool Board::squareAttacked(int square, int defending_side){
 
+    assert (checkInsideBoard(square));
+    assert (checkValidSide(defending_side));
+
     int piece_color = defending_side;
 
     // check diagonal for bishop / queen
@@ -301,5 +304,16 @@ bool Board::squareAttacked(int square, int defending_side){
     }
     
      return false;
+}
+
+
+int Board::getNumOfPieces(int pieceType){
+    int count = 0;
+
+    for (int i = 1; i <= 64 ; i++){
+        count += pieceListInSq64[pieceType][i];
+    }
+
+    return count;
 }
 

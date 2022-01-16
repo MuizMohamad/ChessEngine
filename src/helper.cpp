@@ -6,7 +6,6 @@ int getNthBitFromNumber(U64 num,int n){
 }
 
 
-
 void setNthBitFromNumber(U64* num,int n){
     *num |= 1ULL << (n-1);
 }
@@ -148,21 +147,7 @@ int sqStrToSq64(std::string sq){
     return square;
 }
 
-bool checkInsideBoard(std::string sq){
 
-    char file = sq[0];
-    char rank = sq[1];
-
-    bool checkFile = int(file) >= 'a' && int(file) <= 'h';
-    bool checkRank = int(rank) >= '1' && int(rank) <= '8';
-
-    return checkFile && checkRank;
-}
-
-bool checkInsideBoard(int sq){
-    int sq64 = Sq120_to_Sq64[sq];
-    return checkInsideBoard(sq64ToSqStr(sq64));
-}
 
 int getPieceColor(int piece){
 
