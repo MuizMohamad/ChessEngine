@@ -20,7 +20,6 @@ std::string sq64ToSqStr(int sq);
 int sqStrToSq64(std::string sq);
 
 
-
 int getPieceColor(int piece);
 std::string combineFileRankStr(char file,char rank);
 

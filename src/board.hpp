@@ -13,8 +13,10 @@ class Board{
         // extra 65 for square 1-64
 
         // TODO fix piece list concept here
-        int pieceListInSq64[13][65];
+        int pieceListInSq64[13][10];
         int piecesInSq64[65];
+
+        int pieceNum[13];
 
         U64 enPassantSquare; // en Passant square
         U64 turn; // 0 for white , 1 for black
@@ -35,11 +37,8 @@ class Board{
         void print_board();
         void init_pieces();
         int getPieceAtSq64(int square);
-        void parsingFEN(std::string fen);
+        void parseFEN(std::string fen);
         bool squareAttacked(int square, int attacking_side);
-
-        int getNumOfPieces(int pieceType);
-        
 };
 
 

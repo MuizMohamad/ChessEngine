@@ -19,78 +19,100 @@ Board::Board(){
 }
 
 void Board::empty_board(){
+
+    // empty piece list
     for (int i = 0 ; i < 13 ; i++){
-        for (int j = 1 ; j <= 64 ; j++){
-            pieceListInSq64[i][j] = 0;
+        for (int j = 0 ; j < 10 ; j++){
+            pieceListInSq64[i][j] = NO_SQ;
         }
     }
 
+    // empty piecesInSq
     for (int i = 0 ; i <= 65 ; i++){
         piecesInSq64[i] = EMPTY;
+    }
+
+    // empty piece Num
+    for (int i = 0 ; i < 13 ; i++){
+        pieceNum[i] = 0;
     }
 }
 
 void Board::init_pieces(){
 
-    // initiate empty space
-    for (int i = A3 ; i <= H6 ; i++ ){
-        pieceListInSq64[0][i] = 1;
-    }
+    empty_board();
 
     // initiate pawns
     for (int i = 0 ; i < 8 ; i++){
-        pieceListInSq64[wP][Sq120_to_Sq64[wPawnStart[i]]] = 1;
-        pieceListInSq64[bP][Sq120_to_Sq64[bPawnStart[i]]] = 1;
+        pieceListInSq64[wP][i] = Sq120_to_Sq64[wPawnStart[i]];
+        pieceListInSq64[bP][i] = Sq120_to_Sq64[wPawnStart[i]];
 
         piecesInSq64[Sq120_to_Sq64[wPawnStart[i]]] = wP;
         piecesInSq64[Sq120_to_Sq64[bPawnStart[i]]] = bP;
+
+        pieceNum[wP] += 1;
+        pieceNum[bP] += 1;
     }
  
     // initiate knight
     for (int i = 0 ; i < 2 ; i++){
 
-        pieceListInSq64[wN][Sq120_to_Sq64[wKnightStart[i]]] = 1;
-        pieceListInSq64[bN][Sq120_to_Sq64[bKnightStart[i]]] = 1;
+        pieceListInSq64[wN][i] = Sq120_to_Sq64[wKnightStart[i]];
+        pieceListInSq64[bN][i] = Sq120_to_Sq64[bKnightStart[i]];
 
         piecesInSq64[Sq120_to_Sq64[wKnightStart[i]]] = wN;
         piecesInSq64[Sq120_to_Sq64[bKnightStart[i]]] = bN;
 
+        pieceNum[wN] += 1;
+        pieceNum[bN] += 1;
     }
 
     // initiate bishop
     for (int i = 0 ; i < 2 ; i++){
-        pieceListInSq64[wB][Sq120_to_Sq64[wBishopStart[i]]] = 1;
-        pieceListInSq64[bB][Sq120_to_Sq64[bBishopStart[i]]] = 1;
+        pieceListInSq64[wB][i] = Sq120_to_Sq64[wBishopStart[i]];
+        pieceListInSq64[bB][i] = Sq120_to_Sq64[bBishopStart[i]];
 
         piecesInSq64[Sq120_to_Sq64[wBishopStart[i]]] = wB;
         piecesInSq64[Sq120_to_Sq64[bBishopStart[i]]] = bB;
+
+        pieceNum[wB] += 1;
+        pieceNum[bB] += 1;
     }
 
     // initiate rook
     for (int i = 0 ; i < 2 ; i++){
-        pieceListInSq64[wR][Sq120_to_Sq64[wRookStart[i]]] = 1;
-        pieceListInSq64[bR][Sq120_to_Sq64[bRookStart[i]]] = 1;
+        pieceListInSq64[wR][i] = Sq120_to_Sq64[wRookStart[i]];
+        pieceListInSq64[bR][i] = Sq120_to_Sq64[bRookStart[i]];
 
         piecesInSq64[Sq120_to_Sq64[wRookStart[i]]] = wR;
         piecesInSq64[Sq120_to_Sq64[bRookStart[i]]] = bR;
+
+        pieceNum[wR] += 1;
+        pieceNum[bR] += 1;
     }
 
     // initiate queen
     for (int i = 0 ; i < 1 ; i++){
-        pieceListInSq64[wQ][Sq120_to_Sq64[wQueenStart[i]]] = 1;
-        pieceListInSq64[bQ][Sq120_to_Sq64[bQueenStart[i]]] = 1;
+        pieceListInSq64[wQ][i] = Sq120_to_Sq64[wQueenStart[i]];
+        pieceListInSq64[bQ][i] = Sq120_to_Sq64[bQueenStart[i]];
 
         piecesInSq64[Sq120_to_Sq64[wQueenStart[i]]] = wQ;
         piecesInSq64[Sq120_to_Sq64[bQueenStart[i]]] = bQ;
+
+        pieceNum[wQ] += 1;
+        pieceNum[bQ] += 1;
     }
 
     // initiate king
     for (int i = 0 ; i < 1 ; i++){
-        pieceListInSq64[wK][Sq120_to_Sq64[wKingStart[i]]] = 1;
-        pieceListInSq64[bK][Sq120_to_Sq64[bKingStart[i]]] = 1;
+        pieceListInSq64[wK][i] = Sq120_to_Sq64[wKingStart[i]];
+        pieceListInSq64[bK][i] = Sq120_to_Sq64[bKingStart[i]];
 
         piecesInSq64[Sq120_to_Sq64[wKingStart[i]]] = wK;
         piecesInSq64[Sq120_to_Sq64[bKingStart[i]]] = bK;
+
+        pieceNum[wK] += 1;
+        pieceNum[bK] += 1;
     }
 }
 
@@ -116,7 +138,7 @@ int Board::getPieceAtSq64(int square){
 }
 
 
-void Board::parsingFEN(std::string fen){
+void Board::parseFEN(std::string fen){
 
     std::vector<std::string> fen_split = split_string(fen," ");
 
@@ -139,9 +161,12 @@ void Board::parsingFEN(std::string fen){
             if (isalpha(line[i])){
                 int piece = charToPiece(line[i]);
                 
-                pieceListInSq64[piece][sq64] = 1 ;
+                int piece_number = pieceNum[piece];
+                pieceListInSq64[piece][piece_number] = sq64 ;
                 piecesInSq64[sq64] = piece;
+
                 file++;
+                pieceNum[piece]++;
             }
             else if (isdigit(line[i])){
                 file += int(line[i]) - '0';
@@ -307,13 +332,4 @@ bool Board::squareAttacked(int square, int defending_side){
 }
 
 
-int Board::getNumOfPieces(int pieceType){
-    int count = 0;
-
-    for (int i = 1; i <= 64 ; i++){
-        count += pieceListInSq64[pieceType][i];
-    }
-
-    return count;
-}
 
