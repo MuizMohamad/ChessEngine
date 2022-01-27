@@ -10,6 +10,9 @@
 #include <sstream>
 #include <cassert>
 #include <math.h>
+#include <algorithm>
+#include <iterator>
+
 
 // Typedef for short form
 typedef unsigned long long U64;

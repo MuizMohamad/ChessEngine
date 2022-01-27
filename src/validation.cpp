@@ -1,5 +1,6 @@
 #include "validation.hpp"
 
+
 bool checkInsideBoard(std::string sq){
 
     char file = sq[0];
@@ -11,8 +12,8 @@ bool checkInsideBoard(std::string sq){
     return checkFile && checkRank;
 }
 
-bool checkInsideBoard(int sq){
-    int sq64 = Sq120_to_Sq64[sq];
+bool checkInsideBoard(int sq120){
+    int sq64 = Sq120_to_Sq64[sq120];
     return checkInsideBoard(sq64ToSqStr(sq64));
 }
 

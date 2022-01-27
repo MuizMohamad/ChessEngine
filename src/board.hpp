@@ -12,7 +12,10 @@ class Board{
         // Put each piece location in square based on enum
         // extra 65 for square 1-64
 
-        // TODO fix piece list concept here
+        // by default we calculate using 12x10 board representation
+        int pieceList[13][10];
+        int pieces[65];
+    
         int pieceListInSq64[13][10];
         int piecesInSq64[65];
 

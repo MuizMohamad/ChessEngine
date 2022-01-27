@@ -23,12 +23,14 @@ void Board::empty_board(){
     // empty piece list
     for (int i = 0 ; i < 13 ; i++){
         for (int j = 0 ; j < 10 ; j++){
+            pieceList[i][j] = NO_SQ;
             pieceListInSq64[i][j] = NO_SQ;
         }
     }
 
     // empty piecesInSq
     for (int i = 0 ; i <= 65 ; i++){
+        pieces[i] = EMPTY;
         piecesInSq64[i] = EMPTY;
     }
 
@@ -44,8 +46,15 @@ void Board::init_pieces(){
 
     // initiate pawns
     for (int i = 0 ; i < 8 ; i++){
+
+        pieceList[wP][i] = wPawnStart[i];
+        pieceList[bP][i] = bPawnStart[i];
+
         pieceListInSq64[wP][i] = Sq120_to_Sq64[wPawnStart[i]];
-        pieceListInSq64[bP][i] = Sq120_to_Sq64[wPawnStart[i]];
+        pieceListInSq64[bP][i] = Sq120_to_Sq64[bPawnStart[i]];
+
+        pieces[wPawnStart[i]] = wP;
+        pieces[bPawnStart[i]] = bP;
 
         piecesInSq64[Sq120_to_Sq64[wPawnStart[i]]] = wP;
         piecesInSq64[Sq120_to_Sq64[bPawnStart[i]]] = bP;
@@ -57,8 +66,14 @@ void Board::init_pieces(){
     // initiate knight
     for (int i = 0 ; i < 2 ; i++){
 
+        pieceList[wN][i] = wKnightStart[i];
+        pieceList[bN][i] = bKnightStart[i];
+        
         pieceListInSq64[wN][i] = Sq120_to_Sq64[wKnightStart[i]];
         pieceListInSq64[bN][i] = Sq120_to_Sq64[bKnightStart[i]];
+
+        pieces[wKnightStart[i]] = wN;
+        pieces[bKnightStart[i]] = bN;
 
         piecesInSq64[Sq120_to_Sq64[wKnightStart[i]]] = wN;
         piecesInSq64[Sq120_to_Sq64[bKnightStart[i]]] = bN;
@@ -69,8 +84,15 @@ void Board::init_pieces(){
 
     // initiate bishop
     for (int i = 0 ; i < 2 ; i++){
+
+        pieceList[wB][i] = wBishopStart[i];
+        pieceList[bB][i] = bBishopStart[i];
+
         pieceListInSq64[wB][i] = Sq120_to_Sq64[wBishopStart[i]];
         pieceListInSq64[bB][i] = Sq120_to_Sq64[bBishopStart[i]];
+
+        pieces[wBishopStart[i]] = wB;
+        pieces[bBishopStart[i]] = bB;
 
         piecesInSq64[Sq120_to_Sq64[wBishopStart[i]]] = wB;
         piecesInSq64[Sq120_to_Sq64[bBishopStart[i]]] = bB;
@@ -81,8 +103,15 @@ void Board::init_pieces(){
 
     // initiate rook
     for (int i = 0 ; i < 2 ; i++){
+
+        pieceList[wR][i] = wRookStart[i];
+        pieceList[bR][i] = bRookStart[i];
+
         pieceListInSq64[wR][i] = Sq120_to_Sq64[wRookStart[i]];
         pieceListInSq64[bR][i] = Sq120_to_Sq64[bRookStart[i]];
+
+        pieces[wRookStart[i]] = wR;
+        pieces[bRookStart[i]] = bR;
 
         piecesInSq64[Sq120_to_Sq64[wRookStart[i]]] = wR;
         piecesInSq64[Sq120_to_Sq64[bRookStart[i]]] = bR;
@@ -93,8 +122,15 @@ void Board::init_pieces(){
 
     // initiate queen
     for (int i = 0 ; i < 1 ; i++){
+
+        pieceList[wQ][i] = wQueenStart[i];
+        pieceList[bQ][i] = bQueenStart[i];
+
         pieceListInSq64[wQ][i] = Sq120_to_Sq64[wQueenStart[i]];
         pieceListInSq64[bQ][i] = Sq120_to_Sq64[bQueenStart[i]];
+
+        pieces[wQueenStart[i]] = wQ;
+        pieces[bQueenStart[i]] = bQ;
 
         piecesInSq64[Sq120_to_Sq64[wQueenStart[i]]] = wQ;
         piecesInSq64[Sq120_to_Sq64[bQueenStart[i]]] = bQ;
@@ -105,8 +141,15 @@ void Board::init_pieces(){
 
     // initiate king
     for (int i = 0 ; i < 1 ; i++){
+
+        pieceList[wK][i] = wKingStart[i];
+        pieceList[bK][i] = bKingStart[i];
+
         pieceListInSq64[wK][i] = Sq120_to_Sq64[wKingStart[i]];
         pieceListInSq64[bK][i] = Sq120_to_Sq64[bKingStart[i]];
+
+        pieces[wKingStart[i]] = wK;
+        pieces[bKingStart[i]] = bK;
 
         piecesInSq64[Sq120_to_Sq64[wKingStart[i]]] = wK;
         piecesInSq64[Sq120_to_Sq64[bKingStart[i]]] = bK;
@@ -164,6 +207,10 @@ void Board::parseFEN(std::string fen){
                 int piece_number = pieceNum[piece];
                 pieceListInSq64[piece][piece_number] = sq64 ;
                 piecesInSq64[sq64] = piece;
+
+                int sq120 = Sq64_to_Sq120[sq64];
+                pieceList[piece][piece_number] = sq120 ;
+                pieces[sq120] = piece;
 
                 file++;
                 pieceNum[piece]++;

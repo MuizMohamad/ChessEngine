@@ -4,7 +4,7 @@
 #include "helper.hpp"
 
 bool checkInsideBoard(std::string sq);
-bool checkInsideBoard(int sq);
+bool checkInsideBoard(int sq120);
 
 bool checkValidSide(int side);
 bool checkValidFileRank(int fr);
