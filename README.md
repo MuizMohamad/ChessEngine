@@ -17,7 +17,7 @@ Project build are not being set up currently since chess programming aspect are 
 
 ## PROGRESS  
 Board representation - DONE  
-Parse FEN - DONE  
+Parse FEN - DONE 
 Print board - DONE  
 Check if a square was attacked by opposite side - DONE  
 Move formatting - DONE  
