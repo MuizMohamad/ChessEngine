@@ -14,8 +14,9 @@ Board::Board(){
 
     empty_board();
     
+
     init_pieces();
-    
+
 }
 
 void Board::empty_board(){
@@ -28,9 +29,13 @@ void Board::empty_board(){
         }
     }
 
+    // empty pieces 120 squares
+    for (int i = 0 ; i < 120 ; i++){
+        pieces[i] = EMPTY;
+    }
+
     // empty piecesInSq
     for (int i = 0 ; i <= 65 ; i++){
-        pieces[i] = EMPTY;
         piecesInSq64[i] = EMPTY;
     }
 
@@ -55,14 +60,16 @@ void Board::init_pieces(){
 
         pieces[wPawnStart[i]] = wP;
         pieces[bPawnStart[i]] = bP;
-
+        if (wPawnStart[i] == 53 || bPawnStart[i] == 53) std::cout << "ayam paw" << "\n";
         piecesInSq64[Sq120_to_Sq64[wPawnStart[i]]] = wP;
         piecesInSq64[Sq120_to_Sq64[bPawnStart[i]]] = bP;
 
         pieceNum[wP] += 1;
         pieceNum[bP] += 1;
     }
- 
+    
+    
+
     // initiate knight
     for (int i = 0 ; i < 2 ; i++){
 
@@ -82,6 +89,7 @@ void Board::init_pieces(){
         pieceNum[bN] += 1;
     }
 
+    
     // initiate bishop
     for (int i = 0 ; i < 2 ; i++){
 
@@ -93,7 +101,7 @@ void Board::init_pieces(){
 
         pieces[wBishopStart[i]] = wB;
         pieces[bBishopStart[i]] = bB;
-
+        if (wBishopStart[i] == 53 || bBishopStart[i] == 53) std::cout << "ayam bis" << "\n";
         piecesInSq64[Sq120_to_Sq64[wBishopStart[i]]] = wB;
         piecesInSq64[Sq120_to_Sq64[bBishopStart[i]]] = bB;
 
@@ -112,13 +120,15 @@ void Board::init_pieces(){
 
         pieces[wRookStart[i]] = wR;
         pieces[bRookStart[i]] = bR;
-
+        if (wRookStart[i] == 53 || bRookStart[i] == 53) std::cout << "ayam rok" << "\n";
         piecesInSq64[Sq120_to_Sq64[wRookStart[i]]] = wR;
         piecesInSq64[Sq120_to_Sq64[bRookStart[i]]] = bR;
 
         pieceNum[wR] += 1;
         pieceNum[bR] += 1;
     }
+
+    
 
     // initiate queen
     for (int i = 0 ; i < 1 ; i++){
@@ -131,13 +141,15 @@ void Board::init_pieces(){
 
         pieces[wQueenStart[i]] = wQ;
         pieces[bQueenStart[i]] = bQ;
-
+        
         piecesInSq64[Sq120_to_Sq64[wQueenStart[i]]] = wQ;
         piecesInSq64[Sq120_to_Sq64[bQueenStart[i]]] = bQ;
 
         pieceNum[wQ] += 1;
         pieceNum[bQ] += 1;
     }
+
+    
 
     // initiate king
     for (int i = 0 ; i < 1 ; i++){
@@ -150,13 +162,31 @@ void Board::init_pieces(){
 
         pieces[wKingStart[i]] = wK;
         pieces[bKingStart[i]] = bK;
-
+        
         piecesInSq64[Sq120_to_Sq64[wKingStart[i]]] = wK;
         piecesInSq64[Sq120_to_Sq64[bKingStart[i]]] = bK;
 
         pieceNum[wK] += 1;
         pieceNum[bK] += 1;
     }
+
+    // char pieceChar1 = pieceToChar(getPieceAtSq64(43));
+    // std::cout << pieceChar1 << "\n";
+
+    
+}
+
+// debugging purposes
+void Board::printCharPieceAtSq64(int sq64){
+    char pieceChar1 = pieceToChar(getPieceAtSq64(sq64));
+    std::cout << "CharPiece: " << pieceChar1 << "\n";
+}
+
+void Board::printCharPieceAtSq120(int sq120){
+
+    int sq64 = Sq120_to_Sq64[sq120];
+    char pieceChar1 = pieceToChar(getPieceAtSq64(sq64));
+    std::cout << "CharPiece: " << pieceChar1 << "\n";
 }
 
 void Board::print_board(){
@@ -166,8 +196,10 @@ void Board::print_board(){
     for (int rank = RANK_8 ; rank >= RANK_1 ; rank--){
         std::string current_row = "--------";
         for (int file = FILE_A ; file <= FILE_H ; file++){
-            int square = 8*(rank-1) + file;
-            current_row[file-1] = pieceToChar(getPieceAtSq64(square));
+            int sq = 8*(rank-1) + file;
+            char pieceChar = pieceToChar(getPieceAtSq64(sq));
+            //if (pieceChar == 'N') std::cout << "(s:" << sq64 << ")\n";
+            current_row[file-1] = pieceChar;
         }
 
         std::cout << current_row << "\n";
@@ -175,9 +207,10 @@ void Board::print_board(){
     std::cout << "--------\n";
 }
 
-int Board::getPieceAtSq64(int square){
+int Board::getPieceAtSq64(int sq64){
 
-    return piecesInSq64[square];
+    //return piecesInSq64[square];
+    return pieces[Sq64_to_Sq120[sq64]];
 }
 
 
@@ -203,8 +236,8 @@ void Board::parseFEN(std::string fen){
             int sq64 = 8*(rank-1) + file;
             if (isalpha(line[i])){
                 int piece = charToPiece(line[i]);
-                
                 int piece_number = pieceNum[piece];
+                
                 pieceListInSq64[piece][piece_number] = sq64 ;
                 piecesInSq64[sq64] = piece;
 
@@ -220,8 +253,6 @@ void Board::parseFEN(std::string fen){
             }
         }
     }
-
-    
 
     // parse current turn
     std::string turnFen = fen_split.at(1);
@@ -270,7 +301,7 @@ void Board::parseFEN(std::string fen){
         enPassantSquare = 0;
     }
     else{
-        enPassantSquare = sqStrToSq64(enPasStr);
+        enPassantSquare = Sq64_to_Sq120[sqStrToSq64(enPasStr)];
     }
 
     // parse half-move counter

@@ -48,9 +48,10 @@ class Move{
     
         static U64 createMoveBits(int fromSq,int toSq,int enPassant,int castle,int promoted,int captured,int pawnStart);
         
-        static std::string move_format_print(Move move);
+        void move_format_print();
         
         static std::vector<Move> generateWhitePawnMove(int pawnSq64,Board b);
+        static std::vector<Move> generateBlackPawnMove(int pawnSq64,Board b);
         static std::vector<Move> generatePawnMoves(Board b); // general all pawns
     /*
     generateKnightMoves();

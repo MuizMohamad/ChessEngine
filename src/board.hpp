@@ -12,16 +12,16 @@ class Board{
         // Put each piece location in square based on enum
         // extra 65 for square 1-64
 
-        // by default we calculate using 12x10 board representation
+        // by default we calculate using 12x10 board representation (start with index 0 - 119)
         int pieceList[13][10];
-        int pieces[65];
+        int pieces[120];
     
         int pieceListInSq64[13][10];
         int piecesInSq64[65];
 
         int pieceNum[13];
 
-        U64 enPassantSquare; // en Passant square
+        U64 enPassantSquare; // en Passant square (sq 120)
         U64 turn; // 0 for white , 1 for black
 
         // 0000 : 4th bit - black can castle queen, 3rd bit - black can castle king, 2nd -, white castle queen , 1st - white castle king
@@ -42,6 +42,9 @@ class Board{
         int getPieceAtSq64(int square);
         void parseFEN(std::string fen);
         bool squareAttacked(int square, int attacking_side);
+
+        void printCharPieceAtSq120(int sq120);
+        void printCharPieceAtSq64(int sq64);
 };
 
 

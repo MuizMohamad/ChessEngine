@@ -26,6 +26,8 @@ void InitSq120To64(){
 			sq120 = (21 + (file-1)) + 10 * (rank-1);
 			Sq64_to_Sq120[sq64] = sq120;
 			Sq120_to_Sq64[sq120] = sq64;
+			
+			//std::cout << "sq64:" << sq64 << "sq120:" << sq120 << "\n"; 
 			sq64++;
 		}
 	}
