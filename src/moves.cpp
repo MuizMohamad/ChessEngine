@@ -269,20 +269,93 @@ std::vector<Move> Move::generateBlackPawnMove(int pawnSq120,Board b){
 
 std::vector<Move> Move::generateLoopPieceMoves(Board b){
     
+    std::vector<Move> all_moves;
+
     int turn = b.turn;
 
     int pieceIndex = loopPieceIndex[turn];
     int cur_piece = loopPieces[pieceIndex];
 
-    while(cur_piece != 0){
+    while(loopPieces[pieceIndex] != 0){
 
-        int cur_piece = loopPieces[pieceIndex];
+        cur_piece = loopPieces[pieceIndex];
 
-        // generate moves here
+        if (b.turn == WHITE){
+            
+            int curPieceNum = b.pieceNum[cur_piece];
+            for (int i = 0 ; i < curPieceNum ; i++){
+                int curSq = b.pieceList[cur_piece][i];
+                //std::cout << "Piece " << cur_piece << " " << i << " " << all_moves.size() << '\n';
+                for (int j = 0 ; j < numDir[cur_piece];j++){
+                    int dir = pceDir[cur_piece][j];
+                    int sqAfter = curSq + dir;
+
+                    while(checkInsideBoard(sqAfter)){
+                        if (!checkInsideBoard(sqAfter)) continue;
+
+                        if (b.pieces[sqAfter] == EMPTY){
+                            U64 movebits = createMoveBits(curSq,sqAfter,0,0,0,0,0);
+                            all_moves.push_back(Move(movebits));    
+                        }
+
+                        if (getPieceColor(b.pieces[sqAfter]) == BLACK){
+                            U64 movebits = createMoveBits(curSq,sqAfter,b.pieces[sqAfter],0,0,0,0);
+                            all_moves.push_back(Move(movebits));
+                            break;    
+                        }
+                        if (getPieceColor(b.pieces[sqAfter]) == WHITE){
+                            break;     
+                        }
+                        sqAfter += dir;
+                    }
+                    
+                }
+
+
+            }
+
+            
+
+        }
+        if (b.turn == BLACK){
+            int curPieceNum = b.pieceNum[cur_piece];
+
+            for (int i = 0 ; i < curPieceNum ; i++){
+                int curSq = b.pieceList[cur_piece][i];
+
+                for (int j = 0 ; j < numDir[cur_piece];j++){
+                    int dir = pceDir[cur_piece][j];
+                    int sqAfter = curSq + dir;
+
+                    while(checkInsideBoard(sqAfter)){
+                        if (!checkInsideBoard(sqAfter)) continue;
+
+                        if (b.pieces[sqAfter] == EMPTY){
+                            U64 movebits = createMoveBits(curSq,sqAfter,0,0,0,0,0);
+                            all_moves.push_back(Move(movebits));    
+                        }
+                        
+                        if (getPieceColor(b.pieces[sqAfter]) == WHITE){
+                            U64 movebits = createMoveBits(curSq,sqAfter,b.pieces[sqAfter],0,0,0,0);
+                            all_moves.push_back(Move(movebits));
+                            break;     
+                        }
+
+                        if (getPieceColor(b.pieces[sqAfter]) == BLACK){
+                            break;     
+                        }
+                        sqAfter += dir;
+                    }
+                }
+
+
+            }
+        }
         
         pieceIndex++;
     }
 
+    return all_moves;
 
 }
 
@@ -294,7 +367,7 @@ std::vector<Move> Move::generateNonLoopPieceMoves(Board b){
     int pieceIndex = nonLoopPieceIndex[turn];
     int cur_piece = nonLoopPieces[pieceIndex];
 
-    
+    // generate moves here
     while(nonLoopPieces[pieceIndex] != 0){
 
         cur_piece = nonLoopPieces[pieceIndex];
@@ -326,7 +399,7 @@ std::vector<Move> Move::generateNonLoopPieceMoves(Board b){
 
             }
 
-            //std::cout << "ayam" << '\n';
+            
 
         }
         if (b.turn == BLACK){
@@ -355,7 +428,7 @@ std::vector<Move> Move::generateNonLoopPieceMoves(Board b){
 
             }
         }
-        // generate moves here
+        
 
         pieceIndex++;
     }
