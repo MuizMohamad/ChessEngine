@@ -151,8 +151,8 @@ int sqStrToSq64(std::string sq){
 
 int getPieceColor(int piece){
 
-    if (piece >= wP and piece <= wK) return WHITE;
-    else if (piece >= bP and piece <= bK) return BLACK;
+    if (piece >= wP && piece <= wK) return WHITE;
+    else if (piece >= bP && piece <= bK) return BLACK;
     else return BOTH;
 
 }

@@ -36,7 +36,16 @@ class Move{
     public :
 
         Move(U64 movebits);
-        
+
+        static const std::vector<int> loopPieces ;
+        static const std::vector<int> nonLoopPieces ;
+
+        static const std::vector<int> loopPieceIndex;
+        static const std::vector<int> nonLoopPieceIndex;
+
+        static const std::vector<std::vector<int>> pceDir;
+        static const std::vector<int> numDir;
+
         // get something from field
         int fromSq();
         int toSq();
@@ -53,6 +62,9 @@ class Move{
         static std::vector<Move> generateWhitePawnMove(int pawnSq64,Board b);
         static std::vector<Move> generateBlackPawnMove(int pawnSq64,Board b);
         static std::vector<Move> generatePawnMoves(Board b); // general all pawns
+
+        static std::vector<Move> generateLoopPieceMoves(Board b);
+        static std::vector<Move> generateNonLoopPieceMoves(Board b);
     /*
     generateKnightMoves();
     generateQueenMoves();

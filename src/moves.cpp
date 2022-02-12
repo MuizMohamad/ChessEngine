@@ -1,6 +1,31 @@
 
 #include "moves.hpp"
 
+
+const std::vector<int> Move::loopPieces = {wB,wR,wQ,0,bB,bR,bQ,0};
+const std::vector<int> Move::nonLoopPieces = {wN,wK,0,bN,bK,0};
+
+const std::vector<int> Move::loopPieceIndex = {0,4};
+const std::vector<int> Move::nonLoopPieceIndex = {0,3};
+
+const std::vector<std::vector<int>> Move::pceDir = {
+	{ 0, 0, 0, 0, 0, 0, 0 },
+	{ 0, 0, 0, 0, 0, 0, 0 },
+	{ -8, -19,	-21, -12, 8, 19, 21, 12 },
+	{ -9, -11, 11, 9, 0, 0, 0, 0 },
+	{ -1, -10,	1, 10, 0, 0, 0, 0 },
+	{ -1, -10,	1, 10, -9, -11, 11, 9 },
+	{ -1, -10,	1, 10, -9, -11, 11, 9 },
+	{ 0, 0, 0, 0, 0, 0, 0 },
+	{ -8, -19,	-21, -12, 8, 19, 21, 12 },
+	{ -9, -11, 11, 9, 0, 0, 0, 0 },
+	{ -1, -10,	1, 10, 0, 0, 0, 0 },
+	{ -1, -10,	1, 10, -9, -11, 11, 9 },
+	{ -1, -10,	1, 10, -9, -11, 11, 9 }
+};
+
+const std::vector<int> Move::numDir = { 0, 0, 8, 4, 4, 8, 8, 0, 8, 4, 4, 8, 8};
+
 Move::Move(U64 movebits){
     moves = movebits;
 }
@@ -240,6 +265,102 @@ std::vector<Move> Move::generateBlackPawnMove(int pawnSq120,Board b){
 
     */
     
+}
+
+std::vector<Move> Move::generateLoopPieceMoves(Board b){
+    
+    int turn = b.turn;
+
+    int pieceIndex = loopPieceIndex[turn];
+    int cur_piece = loopPieces[pieceIndex];
+
+    while(cur_piece != 0){
+
+        int cur_piece = loopPieces[pieceIndex];
+
+        // generate moves here
+        
+        pieceIndex++;
+    }
+
+
+}
+
+std::vector<Move> Move::generateNonLoopPieceMoves(Board b){
+
+    std::vector<Move> all_moves;
+    int turn = b.turn;
+
+    int pieceIndex = nonLoopPieceIndex[turn];
+    int cur_piece = nonLoopPieces[pieceIndex];
+
+    
+    while(nonLoopPieces[pieceIndex] != 0){
+
+        cur_piece = nonLoopPieces[pieceIndex];
+
+        //std::cout << "CUR : " << cur_piece << '\n';
+        if (b.turn == WHITE){
+            
+            int curPieceNum = b.pieceNum[cur_piece];
+            for (int i = 0 ; i < curPieceNum ; i++){
+                int curSq = b.pieceList[cur_piece][i];
+                //std::cout << "Piece " << cur_piece << " " << i << " " << all_moves.size() << '\n';
+                for (int j = 0 ; j < numDir[cur_piece];j++){
+                    int dir = pceDir[cur_piece][j];
+                    int sqAfter = curSq + dir;
+
+                    if (!checkInsideBoard(sqAfter)) continue;
+
+                    if (b.pieces[sqAfter] == EMPTY){
+                        U64 movebits = createMoveBits(curSq,sqAfter,0,0,0,0,0);
+                        all_moves.push_back(Move(movebits));    
+                    }
+
+                    if (getPieceColor(b.pieces[sqAfter]) == BLACK){
+                        U64 movebits = createMoveBits(curSq,sqAfter,b.pieces[sqAfter],0,0,0,0);
+                        all_moves.push_back(Move(movebits));    
+                    }
+                }
+
+
+            }
+
+            //std::cout << "ayam" << '\n';
+
+        }
+        if (b.turn == BLACK){
+            int curPieceNum = b.pieceNum[cur_piece];
+
+            for (int i = 0 ; i < curPieceNum ; i++){
+                int curSq = b.pieceList[cur_piece][i];
+
+                for (int j = 0 ; j < numDir[cur_piece];j++){
+                    int dir = pceDir[cur_piece][j];
+                    int sqAfter = curSq + dir;
+
+                    if (!checkInsideBoard(sqAfter)) continue;
+
+                    if (b.pieces[sqAfter] == EMPTY){
+                        U64 movebits = createMoveBits(curSq,sqAfter,0,0,0,0,0);
+                        all_moves.push_back(Move(movebits));    
+                    }
+                    
+                    if (getPieceColor(b.pieces[sqAfter]) == WHITE){
+                        U64 movebits = createMoveBits(curSq,sqAfter,b.pieces[sqAfter],0,0,0,0);
+                        all_moves.push_back(Move(movebits));    
+                    }
+                }
+
+
+            }
+        }
+        // generate moves here
+
+        pieceIndex++;
+    }
+
+    return all_moves;
 }
 
 std::vector<Move> Move::generatePawnMoves(Board b){
