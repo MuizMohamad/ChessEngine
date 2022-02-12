@@ -22,4 +22,11 @@ Print board - DONE
 Check if a square was attacked by opposite side - DONE  
 Move formatting - DONE  
 Move Generation - IN PROGRESS  
-
+  white pawn - DONE
+  black pawn - DONE
+  white/black knight - DONE
+  white/black king - DONE
+  white/black rook -
+  white/black bishop -
+  white/black queen -
+  
