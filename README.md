@@ -21,7 +21,8 @@ Parse FEN - DONE
 Print board - DONE  
 Check if a square was attacked by opposite side - DONE  
 Move formatting - DONE  
-Move Generation - IN PROGRESS  
+  
+# Move Generation - IN PROGRESS  
   white pawn - DONE  
   black pawn - DONE  
   white/black knight - DONE  
