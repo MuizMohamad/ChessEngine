@@ -516,6 +516,28 @@ std::vector<Move> Move::generateCastlingMoves(Board b){
     return all_moves;
 }
 
+std::vector<Move> Move::generateAllMoves(Board b){
+    std::vector<Move> all_moves;
+    
+    // generate pawn moves
+    std::vector<Move> all_moves_pawns =  generatePawnMoves(b);
+    all_moves.insert(all_moves.end(), all_moves_pawns.begin(), all_moves_pawns.end());
+
+    // generate non loop pieces moves
+    std::vector<Move> all_moves_non_loop =  generateNonLoopPieceMoves(b);
+    all_moves.insert(all_moves.end(), all_moves_non_loop.begin(), all_moves_non_loop.end());
+
+    // generate loop pieces moves
+    std::vector<Move> all_moves_loop =  generateLoopPieceMoves(b);
+    all_moves.insert(all_moves.end(), all_moves_loop.begin(), all_moves_loop.end());
+
+    // generate pawn moves
+    std::vector<Move> all_moves_castling =  generateCastlingMoves(b);
+    all_moves.insert(all_moves.end(), all_moves_castling.begin(), all_moves_castling.end());
+
+    return all_moves;
+}
+
 void Move::move_format_print(){
 
     int fromSq120 = fromSq();

@@ -67,11 +67,7 @@ class Move{
         static std::vector<Move> generateNonLoopPieceMoves(Board b);
 
         static std::vector<Move> generateCastlingMoves(Board b);
-    /*
-    generateKnightMoves();
-    generateQueenMoves();
-    generateBishopMoves();
-    generateKingMoves();
-    */
 
+        static std::vector<Move> generateAllMoves(Board b);
+  
 };
