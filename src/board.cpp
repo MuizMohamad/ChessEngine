@@ -393,14 +393,17 @@ bool Board::squareAttacked(int square, int defending_side){
     // check for king attack
    
     int opp_king = bK;
-    if (piece_color == BLACK) opp_king = wK;
+    if (piece_color == BLACK) {
+        std::cout << "awt\n"; 
+        opp_king = wK;
+    } 
 
     for (int direction : king_direction){
         int new_sq120 = square + direction;
         int new_sq64 = Sq120_to_Sq64[new_sq120];
         if (checkInsideBoard(new_sq120)){
             if (piecesInSq64[new_sq64] == opp_king){
-                std::cout << "King attack" << "\n";
+                std::cout << pieceToChar(opp_king) << " King attack" << "\n";
                 return true;
             }
         }

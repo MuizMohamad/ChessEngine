@@ -46,15 +46,21 @@ int Move::promoted(){
 }
 
 int Move::enPassant(){
-    return moves & 0x40000;
+   
+    if (moves & 0x40000 ) return 1;
+    return 0;
 }
 
 int Move::pawnStart(){
-    return moves & 0x80000;
+    
+    if (moves & 0x80000 ) return 1;
+    return 0;
 }
 
 int Move::castle(){
-    return moves & 0x1000000;
+
+    if (moves & 0x1000000 ) return 1;
+    return 0;
 }
 
 U64 Move::createMoveBits(int fromSq,int toSq,int captured,int enPassant,int pawnStart,int promoted,int castle){
@@ -267,6 +273,29 @@ std::vector<Move> Move::generateBlackPawnMove(int pawnSq120,Board b){
     
 }
 
+
+std::vector<Move> Move::generatePawnMoves(Board b){
+
+    std::vector<Move> all_moves;
+    if (b.turn == WHITE){
+        
+        int whitePwnNum = b.pieceNum[wP];
+        for (int i = 0 ; i < whitePwnNum ; i++){
+            std::vector<Move> all_moves_by_piece =  generateWhitePawnMove(b.pieceList[wP][i],b);
+            all_moves.insert(all_moves.end(), all_moves_by_piece.begin(), all_moves_by_piece.end());
+        }
+    }
+    if (b.turn == BLACK){
+        int blackPwnNum = b.pieceNum[bP];
+        for (int i = 0 ; i < blackPwnNum ; i++){
+            std::vector<Move> all_moves_by_piece =  generateBlackPawnMove(b.pieceList[bP][i],b);
+            all_moves.insert(all_moves.end(), all_moves_by_piece.begin(), all_moves_by_piece.end());
+        }
+    }
+
+    return all_moves;
+}
+
 std::vector<Move> Move::generateLoopPieceMoves(Board b){
     
     std::vector<Move> all_moves;
@@ -308,14 +337,8 @@ std::vector<Move> Move::generateLoopPieceMoves(Board b){
                         }
                         sqAfter += dir;
                     }
-                    
                 }
-
-
             }
-
-            
-
         }
         if (b.turn == BLACK){
             int curPieceNum = b.pieceNum[cur_piece];
@@ -436,25 +459,60 @@ std::vector<Move> Move::generateNonLoopPieceMoves(Board b){
     return all_moves;
 }
 
-std::vector<Move> Move::generatePawnMoves(Board b){
+std::vector<Move> Move::generateCastlingMoves(Board b){
 
     std::vector<Move> all_moves;
-    if (b.turn == WHITE){
-        
-        int whitePwnNum = b.pieceNum[wP];
-        for (int i = 0 ; i < whitePwnNum ; i++){
-            std::vector<Move> all_moves_by_piece =  generateWhitePawnMove(b.pieceList[wP][i],b);
-            all_moves.insert(all_moves.end(), all_moves_by_piece.begin(), all_moves_by_piece.end());
-        }
-    }
-    if (b.turn == BLACK){
-        int blackPwnNum = b.pieceNum[bP];
-        for (int i = 0 ; i < blackPwnNum ; i++){
-            std::vector<Move> all_moves_by_piece =  generateBlackPawnMove(b.pieceList[bP][i],b);
-            all_moves.insert(all_moves.end(), all_moves_by_piece.begin(), all_moves_by_piece.end());
-        }
-    }
 
+    int turn = b.turn;
+
+    int wking_castle_flag = 1;
+    int wqueen_castle_flag = 2;
+    int bking_castle_flag = 4;
+    int bqueen_castle_flag = 8;
+
+    bool wking_castle = (b.castlingKey & wking_castle_flag) == wking_castle_flag;
+    bool wqueen_castle = (b.castlingKey & wqueen_castle_flag) == wqueen_castle_flag;
+    bool bking_castle = (b.castlingKey & bking_castle_flag) == bking_castle_flag;
+    bool bqueen_castle = (b.castlingKey & bqueen_castle_flag) == bqueen_castle_flag;
+
+    if (turn == WHITE){
+        if (wking_castle){
+            if (b.pieces[F1] == EMPTY && b.pieces[G1] == EMPTY){
+        
+                if(!b.squareAttacked(E1,WHITE) && !b.squareAttacked(F1,WHITE)){
+                    U64 movebits = createMoveBits(E1,G1,0,0,0,0,1);
+                    all_moves.push_back(Move(movebits)); 
+                }
+            }
+        }
+        if (wqueen_castle){
+            if (b.pieces[D1] == EMPTY && b.pieces[C1] == EMPTY && b.pieces[B1] == EMPTY){
+                if(!b.squareAttacked(E1,WHITE) && !b.squareAttacked(D1,WHITE)){
+                    U64 movebits = createMoveBits(E1,C1,0,0,0,0,1);
+                    all_moves.push_back(Move(movebits)); 
+                }
+            }
+        }
+    }
+    else if (turn == BLACK){
+        if (bking_castle){
+            if (b.pieces[F8] == EMPTY && b.pieces[G8] == EMPTY){
+                if(!b.squareAttacked(E8,BLACK) && !b.squareAttacked(F8,BLACK)){
+                    U64 movebits = createMoveBits(E8,G8,0,0,0,0,1);
+                    all_moves.push_back(Move(movebits)); 
+                }
+            }
+        }
+        if (bqueen_castle){
+            if (b.pieces[D1] == EMPTY && b.pieces[C1] == EMPTY && b.pieces[B1] == EMPTY){
+                if(!b.squareAttacked(E8,BLACK) && !b.squareAttacked(D8,BLACK)){
+                    U64 movebits = createMoveBits(E8,C8,0,0,0,0,1);
+                    all_moves.push_back(Move(movebits)); 
+                }
+            }
+        }
+    }
+    
     return all_moves;
 }
 
@@ -468,20 +526,21 @@ void Move::move_format_print(){
     int prom = promoted();
     int cas = castle();
 
+    // std::cout << "cast" << cas << '\n';
     std::string fromSqStr = sq64ToSqStr(Sq120_to_Sq64[fromSq120]);
     std::string toSqStr = sq64ToSqStr(Sq120_to_Sq64[toSq120]);
 
     char captured_piece = pieceToChar(cap);
     std::string caps = std::string(1, captured_piece);
 
-    std::string eP = std::string(1,enPas);
-    std::string pSStr = std::string(1,pS);
+    // std::string eP = std::string(1,enPas);
+    // std::string pSStr = std::string(1,pS);
 
     char prom_piece = pieceToChar(prom);
     std::string promStr = std::string(1,prom_piece);
 
-    std::string casStr = std::string(1,cas);
+    // std::string casStr = std::string(1,cas);
     
 
-    std::cout << "FromSq:" + fromSqStr + " toSqStr:" + toSqStr + " cap:" + caps + " eP:" + eP + " pS:" + pSStr + " promStr:" + promStr + " casStr:" + casStr << "\n";
+    std::cout << "FromSq:" << fromSqStr << " toSqStr:" << toSqStr << " cap:" << caps << " eP:" << enPas << " pS:" << pS << " promStr:" << promStr << " casStr:" << cas << "\n";
 }

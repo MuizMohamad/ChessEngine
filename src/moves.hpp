@@ -55,7 +55,7 @@ class Move{
         int promoted();
         int castle();
     
-        static U64 createMoveBits(int fromSq,int toSq,int enPassant,int castle,int promoted,int captured,int pawnStart);
+        static U64 createMoveBits(int fromSq,int toSq,int captured,int enPassant,int pawnStart,int promoted,int castle);
         
         void move_format_print();
         
@@ -65,6 +65,8 @@ class Move{
 
         static std::vector<Move> generateLoopPieceMoves(Board b);
         static std::vector<Move> generateNonLoopPieceMoves(Board b);
+
+        static std::vector<Move> generateCastlingMoves(Board b);
     /*
     generateKnightMoves();
     generateQueenMoves();
