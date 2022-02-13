@@ -27,10 +27,10 @@ Move formatting - DONE
   black pawn - DONE  
   white/black knight - DONE  
   white/black king - DONE  
-  white/black rook - DONE
-  white/black bishop - DONE
-  white/black queen - DONE
-  castling - DONE
+  white/black rook - DONE  
+  white/black bishop - DONE  
+  white/black queen - DONE  
+  castling - DONE  
   all moves generation - IN PROGRESS
   
   
