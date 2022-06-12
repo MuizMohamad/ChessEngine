@@ -1,9 +1,14 @@
 
+// INITIALIZATION FILE for some of the global variables
+
 #include "init.hpp"
 
 // extern variables needs have to have one .cpp file that defines it
 std::array<int,BOARD_SQ_NUM+1> Sq120_to_Sq64;
 std::array<int,65> Sq64_to_Sq120;
+U64 PieceKeys[13][120];
+U64 SideKey;
+U64 CastleKeys[16];
 
 void InitSq120To64(){
 
@@ -31,4 +36,25 @@ void InitSq120To64(){
 			sq64++;
 		}
 	}
+}
+
+void InitHashKeys() {
+	
+	int index = 0;
+	int index2 = 0;
+	for(index = 0; index < 13; ++index) {
+		for(index2 = 0; index2 < 120; ++index2) {
+			PieceKeys[index][index2] = RAND_64;
+		}
+	}
+	SideKey = RAND_64;
+	for(index = 0; index < 16; ++index) {
+		CastleKeys[index] = RAND_64;
+	}
+
+}
+
+void InitAll(){
+	InitSq120To64();
+	InitHashKeys();
 }

@@ -4,7 +4,9 @@
 #include "defs.hpp"
 #include "helper.hpp"
 #include "validation.hpp"
+#include "hashkeys.hpp"
 
+// class Board or in another words chess 'position'
 class Board{
 
 
@@ -24,6 +26,7 @@ class Board{
         U64 enPassantSquare; // en Passant square (sq 120)
         U64 turn; // 0 for white , 1 for black
 
+        // castling permission
         // 0000 : 4th bit - black can castle queen, 3rd bit - black can castle king, 2nd -, white castle queen , 1st - white castle king
         U64 castlingKey; 
 
@@ -32,6 +35,8 @@ class Board{
 
         // number of completed moves since last pawn capture
         int halfMove;
+
+        U64 position_key;
 
     public:
 

@@ -309,6 +309,8 @@ void Board::parseFEN(std::string fen){
 
     // parse full-move
     fullMove = std::stoi(fen_split[5]);
+
+    position_key = generatePositionKeys(this);
 }
 
 // check based on the defending side,

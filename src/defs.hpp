@@ -13,7 +13,6 @@
 #include <algorithm>
 #include <iterator>
 
-
 // Typedef for short form
 typedef unsigned long long U64;
 
@@ -75,4 +74,13 @@ const std::array<int,2> b_pawn_atk_direction = {+11,+9};
 extern std::array<int,BOARD_SQ_NUM+1> Sq120_to_Sq64;
 extern std::array<int,65> Sq64_to_Sq120;
 
+// variable macros rand 64
+#define RAND_64 	((U64)rand() | \
+					(U64)rand() << 15 | \
+					(U64)rand() << 30 | \
+					(U64)rand() << 45 | \
+					((U64)rand() & 0xf) << 60 )  
 
+extern U64 PieceKeys[13][120];
+extern U64 SideKey;
+extern U64 CastleKeys[16];

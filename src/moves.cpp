@@ -1,13 +1,14 @@
 
 #include "moves.hpp"
 
-
 const std::vector<int> Move::loopPieces = {wB,wR,wQ,0,bB,bR,bQ,0};
 const std::vector<int> Move::nonLoopPieces = {wN,wK,0,bN,bK,0};
 
 const std::vector<int> Move::loopPieceIndex = {0,4};
 const std::vector<int> Move::nonLoopPieceIndex = {0,3};
 
+
+// direction for each piece
 const std::vector<std::vector<int>> Move::pceDir = {
 	{ 0, 0, 0, 0, 0, 0, 0 },
 	{ 0, 0, 0, 0, 0, 0, 0 },
