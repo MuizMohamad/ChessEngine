@@ -32,17 +32,17 @@ U64 generatePositionKey(Board b) {
 	return finalKey;
 }
 
-U64 un_hash_pieces(Board b,int piece, int sq120){
+U64 hash_piece(Board b,int piece, int sq120){
     return (b.position_key ^= (PieceKeys[piece][sq120]));
 }
 
-U64 un_hash_castling_key(Board b){
+U64 hash_castling_key(Board b){
     return (b.position_key ^= (CastleKeys[(b.castlingKey)]));
 }
 
-U64 un_hash_side(Board b){
+U64 hash_side(Board b){
     return (b.position_key ^= (SideKey));
 }
-U64 un_hash_en_passant(Board b){
+U64 hash_en_passant(Board b){
     return (b.position_key ^= (PieceKeys[EMPTY][(b.enPassantSquare)]));
 }

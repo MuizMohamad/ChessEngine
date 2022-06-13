@@ -24,4 +24,5 @@ const int CastlePerm[120] = {
     15, 15, 15, 15, 15, 15, 15, 15, 15, 15
 };
 
-void ClearPiece(const int sq, Board b);
+void clearPiece(const int sq, Board b);
+void addPiece(const int sq,Board b, int piece);
