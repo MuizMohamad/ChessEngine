@@ -46,8 +46,35 @@ void addPiece(const int sq120, Board b,int piece){
     b.pieces[sq120] = piece;
     b.piecesInSq64[Sq120_to_Sq64[sq120]] = piece;
     
-    
     b.pieceList[piece][b.pieceNum[piece]] = sq120;
     b.pieceListInSq64[piece][b.pieceNum[piece]] = Sq120_to_Sq64[sq120];
     b.pieceNum[piece]++;
+}
+
+void movePiece(const int from, const int to, Board b){
+
+    assert(checkInsideBoard(from));
+    assert(checkInsideBoard(to));
+
+    int piece = b.pieces[from];
+    int piece_color = getPieceColor(piece);
+
+    int piece_exist_from = false;
+
+    // unhash the piece from the position key
+    b.position_key = hash_piece(b,piece,from);
+    b.pieces[from] = EMPTY;
+
+    // hash the new piece location to the position key
+    b.position_key = hash_piece(b,piece,to);
+    b.pieces[to] = piece;
+
+    for (int index = 0 ; index < b.pieceNum[piece]; ++index){
+        if (b.pieceList[piece][index] == from){
+            b.pieceList[piece][index] = to;
+            piece_exist_from = true;
+        }
+    }
+
+    assert(piece_exist_from);
 }
