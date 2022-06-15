@@ -12,13 +12,19 @@ Board::Board(){
     // 1111 for castling
     castlingKey = 15;
 
-    empty_board();
     
 
+    empty_board();
     init_pieces();
 
 }
 
+void Board::resetListValues(){
+
+    for (int i = 0 ; i < 2 ; i ++){
+        materialValue[i] = 0;
+    }
+}
 void Board::empty_board(){
 
     // empty piece list
@@ -172,7 +178,7 @@ void Board::init_pieces(){
 
     // char pieceChar1 = pieceToChar(getPieceAtSq64(43));
     // std::cout << pieceChar1 << "\n";
-
+    this->updateListsMaterial();
     
 }
 
@@ -311,6 +317,9 @@ void Board::parseFEN(std::string fen){
     fullMove = std::stoi(fen_split[5]);
 
     position_key = generatePositionKeys(this);
+
+    // update list materials
+    updateListsMaterial();
 }
 
 // check based on the defending side,
@@ -414,5 +423,26 @@ bool Board::squareAttacked(int square, int defending_side){
      return false;
 }
 
+
+void Board::updateListsMaterial() {	
+	
+	int piece,sq,index,colour;
+	
+	for(index = 0; index < BOARD_SQ_NUM; ++index) {
+		sq = index;
+		piece = pieces[index];
+		if(piece!= EMPTY) {
+
+			colour = getPieceColor(piece);
+
+            // this variables are not added yet
+		    // if( PieceBig[piece] == TRUE) pos->bigPce[colour]++;
+		    // if( PieceMin[piece] == TRUE) pos->minPce[colour]++;
+		    // if( PieceMaj[piece] == TRUE) pos->majPce[colour]++;
+			
+			materialValue[colour] += pieceValue[piece];
+		}
+	}
+}
 
 

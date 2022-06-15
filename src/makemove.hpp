@@ -5,9 +5,6 @@
 #include "validation.hpp"
 #include "hashkeys.hpp"
 
-
-
-
 // this will be used for &= (AND equal) to update permission bits
 const int CastlePerm[120] = {
     15, 15, 15, 15, 15, 15, 15, 15, 15, 15,

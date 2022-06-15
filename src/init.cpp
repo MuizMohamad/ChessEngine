@@ -6,9 +6,12 @@
 // extern variables needs have to have one .cpp file that defines it
 std::array<int,BOARD_SQ_NUM+1> Sq120_to_Sq64;
 std::array<int,65> Sq64_to_Sq120;
+
 U64 PieceKeys[13][120];
 U64 SideKey;
 U64 CastleKeys[16];
+
+int PieceVal[13] = { 0, 100, 325, 325, 550, 1000, 50000, 100, 325, 325, 550, 1000, 50000  };
 
 void InitSq120To64(){
 

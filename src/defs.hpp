@@ -84,3 +84,5 @@ extern std::array<int,65> Sq64_to_Sq120;
 extern U64 PieceKeys[13][120];
 extern U64 SideKey;
 extern U64 CastleKeys[16];
+
+extern int pieceValue[13];

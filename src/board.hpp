@@ -22,6 +22,10 @@ class Board{
         int piecesInSq64[65];
 
         int pieceNum[13];
+        
+        // material value for both sides 0 - white , 1 - black
+        int materialValue[2];
+
 
         U64 enPassantSquare; // en Passant square (sq 120)
         U64 turn; // 0 for white , 1 for black
@@ -41,13 +45,22 @@ class Board{
     public:
 
         Board();
+
+        // initialization or reset functions
         void empty_board();
-        void print_board();
+        void resetListValues();
         void init_pieces();
+
+        // helper functions
+        void updateListsMaterial();
         int getPieceAtSq64(int square);
+
+        // functional functions
         void parseFEN(std::string fen);
         bool squareAttacked(int square, int attacking_side);
 
+        // printing functions
+        void print_board();
         void printCharPieceAtSq120(int sq120);
         void printCharPieceAtSq64(int sq64);
 };
