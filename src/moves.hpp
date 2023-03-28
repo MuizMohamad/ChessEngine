@@ -22,7 +22,7 @@ class Move{
     0000 0000 0000 0011 1111 1000 0000 -> To >> 7, 0x7F (8th to 14th bits) in sq 120 format
     0000 0000 0011 1100 0000 0000 0000 -> Captured piece >> 14, 0xF (15th to 18th bits)
     0000 0000 0100 0000 0000 0000 0000 -> EnPassant indicator & 0x40000 (19th bits)
-    0000 0000 1000 0000 0000 0000 0000 -> Pawn Start & 0x80000 (20th bits)
+    0000 0000 1000 0000 0000 0000 0000 -> Pawn Start & 0x80000 (20th bits) == if pawn moves two step to the front
     0000 1111 0000 0000 0000 0000 0000 -> to-be-Promoted Piece type >> 20, 0xF (21th to 24th bits)
     0001 0000 0000 0000 0000 0000 0000 -> Castle 0x1000000 (25th bits)
     */
@@ -58,7 +58,7 @@ class Move{
 
         int getMoves();
         
-        void move_format_print();
+        void print();
 
         // static functions
         static U64 createMoveBits(int fromSq,int toSq,int captured,int enPassant,int pawnStart,int promoted,int castle);

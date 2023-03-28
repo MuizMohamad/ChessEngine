@@ -1,3 +1,4 @@
+#pragma once
 
 #include "defs.hpp"
 #include "board.hpp"
@@ -21,9 +22,9 @@ const int CastlePerm[120] = {
     15, 15, 15, 15, 15, 15, 15, 15, 15, 15
 };
 
-void clearPiece(const int sq, Board b);
-void addPiece(const int sq, int piece, Board b);
-void movePiece(const int from, const int to, Board b);
+void clearPiece(const int sq, Board& b);
+void addPiece(const int sq, int piece, Board& b);
+void movePiece(const int from, const int to, Board& b);
 
-int makeMove(const Move move, Board b);
-void takeMove(Board b);
+int makeMove(Move move, Board& b);
+void takeMove(Board& b);

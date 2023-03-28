@@ -336,9 +336,11 @@ void Board::parseFEN(std::string fen){
 
 // check based on the defending side,
 // that is if E4 with defending side white, then check if black piece attack the square E4
-bool Board::squareAttacked(int square, int defending_side){
+// square 120
 
-    assert (checkInsideBoard(square));
+bool Board::squareAttacked(int sq120, int defending_side){
+
+    assert (checkInsideBoard(sq120));
     assert (checkValidSide(defending_side));
 
     int piece_color = defending_side;
@@ -353,12 +355,12 @@ bool Board::squareAttacked(int square, int defending_side){
 
     for (int direction : diagonal_direction){
         
-        int cur_sq = square;
-        while(piecesInSq64[cur_sq+direction] != EMPTY && checkInsideBoard(cur_sq + direction)){
+        int cur_sq = sq120;
+        while(checkInsideBoard(cur_sq + direction) && pieces[cur_sq+direction] != EMPTY){
             cur_sq = cur_sq + direction;
         }
 
-        bool queen_or_bishop = piecesInSq64[cur_sq] == opp_bishop || piecesInSq64[cur_sq] == opp_queen;
+        bool queen_or_bishop = (pieces[cur_sq] == opp_bishop || pieces[cur_sq] == opp_queen);
         if (checkInsideBoard(cur_sq) && queen_or_bishop) return true;
     }
     
@@ -368,14 +370,14 @@ bool Board::squareAttacked(int square, int defending_side){
 
     int opp_rook = opp_rook_queen.at(0);
 
-     for (int direction : horizontal_direction){
+    for (int direction : horizontal_direction){
         
-        int cur_sq = square;
-        while(piecesInSq64[cur_sq+direction] != EMPTY && checkInsideBoard(cur_sq + direction)){
+        int cur_sq = sq120;
+        while(checkInsideBoard(cur_sq + direction) && pieces[cur_sq+direction] != EMPTY){
             cur_sq = cur_sq + direction;
         }
 
-        bool queen_or_bishop = piecesInSq64[cur_sq] == opp_rook || piecesInSq64[cur_sq] == opp_queen;
+        bool queen_or_bishop = (pieces[cur_sq] == opp_rook || pieces[cur_sq] == opp_queen);
         if (checkInsideBoard(cur_sq) && queen_or_bishop) return true;
     }
 
@@ -385,11 +387,9 @@ bool Board::squareAttacked(int square, int defending_side){
     if (piece_color == BLACK) opp_knight = wN;
 
     for (int direction : knight_direction){
-        int new_sq120 = square + direction;
-        int new_sq64 = Sq120_to_Sq64[new_sq120];
+        int new_sq120 = sq120 + direction;
         if (checkInsideBoard(new_sq120)){
-            if (piecesInSq64[new_sq64] == opp_knight){
-                std::cout << "Knight attack" << "\n";
+            if (pieces[new_sq120] == opp_knight){
                 return true;
             }
         }
@@ -400,14 +400,12 @@ bool Board::squareAttacked(int square, int defending_side){
     if (piece_color == BLACK) opp_pawn = wP;
 
     std::array<int,2> correct_direction = b_pawn_atk_direction;
-    if (defending_side = BLACK) correct_direction = w_pawn_atk_direction;
+    if (defending_side == BLACK) correct_direction = w_pawn_atk_direction;
 
     for (int direction : correct_direction){
-        int new_sq120 = square + direction;
-        int new_sq64 = Sq120_to_Sq64[new_sq120];
+        int new_sq120 = sq120 + direction;
         if (checkInsideBoard(new_sq120)){
-            if (piecesInSq64[new_sq64] == opp_pawn){
-                std::cout << "Pawn attack" << "\n";
+            if (pieces[new_sq120] == opp_pawn){
                 return true;
             }
         }
@@ -417,16 +415,13 @@ bool Board::squareAttacked(int square, int defending_side){
    
     int opp_king = bK;
     if (piece_color == BLACK) {
-        std::cout << "awt\n"; 
         opp_king = wK;
     } 
 
     for (int direction : king_direction){
-        int new_sq120 = square + direction;
-        int new_sq64 = Sq120_to_Sq64[new_sq120];
+        int new_sq120 = sq120 + direction;
         if (checkInsideBoard(new_sq120)){
-            if (piecesInSq64[new_sq64] == opp_king){
-                std::cout << pieceToChar(opp_king) << " King attack" << "\n";
+            if (pieces[new_sq120] == opp_king){
                 return true;
             }
         }

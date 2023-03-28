@@ -20,6 +20,8 @@ typedef unsigned long long U64;
 const int BOARD_SQ_NUM = 120;
 const int MAX_GAME_MOVES = 2048;
 
+const std::string START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
 // enum
 enum { EMPTY = 0, wP , wN , wB , wR , wQ , wK , bP , bN , bB , bR , bQ , bK };
 enum { FILE_A = 1 , FILE_B , FILE_C , FILE_D , FILE_E , FILE_F , FILE_G , FILE_H  };

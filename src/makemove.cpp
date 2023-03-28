@@ -1,6 +1,6 @@
 #include "makemove.hpp"
 
-void clearPiece(const int sq120, Board b){
+void clearPiece(const int sq120, Board& b){
 
     assert(checkInsideBoard(sq120));
 
@@ -23,7 +23,7 @@ void clearPiece(const int sq120, Board b){
     b.materialValue[color] -= PieceValue[piece];
 
     // one of the square in pieceList should be equal to sq120 (pieceExits)
-    for (int index = 0; index < b.pieceNum[piece]; ++index){
+    for (int index = 0; index < b.pieceNum[piece]; index++){
         if(b.pieceList[piece][index] == sq120){
             t_pieceNum = index;
             break;
@@ -41,7 +41,7 @@ void clearPiece(const int sq120, Board b){
 }
 
 // add piece at a sq120
-void addPiece(const int sq120, int piece, Board b){
+void addPiece(const int sq120, int piece, Board& b){
 
     assert(checkInsideBoard(sq120));
     assert(checkPieceValid(piece));
@@ -64,7 +64,7 @@ void addPiece(const int sq120, int piece, Board b){
     b.pieceNum[piece]++;
 }
 
-void movePiece(const int from, const int to, Board b){
+void movePiece(const int from, const int to, Board& b){
 
     assert(checkInsideBoard(from));
     assert(checkInsideBoard(to));
@@ -94,7 +94,7 @@ void movePiece(const int from, const int to, Board b){
 }
 
 
-int makeMove(Move move, Board b){
+int makeMove(Move move, Board& b){
     
     int from = move.fromSq();
     int to = move.toSq();
@@ -105,7 +105,6 @@ int makeMove(Move move, Board b){
     assert(checkValidSide(side));
     assert(checkPieceValid(b.pieces[from]));
     
-
     b.history[b.halfMoveHistory].position_key = b.position_key;
 
     // enPassant
@@ -166,7 +165,7 @@ int makeMove(Move move, Board b){
 
     if (captured != EMPTY){
         assert(checkPieceValid(captured));
-        clearPiece(to,b);
+        clearPiece(to, b);
         b.fiftyMove = 0;
     }
 
@@ -205,7 +204,7 @@ int makeMove(Move move, Board b){
     b.turn ^= 1;
     b.hash_side();
 
-    if (b.squareAttacked(b.getKingSquare(side), b.turn)){
+    if (b.squareAttacked(b.getKingSquare(side), side)){
         takeMove(b);
         return false;
     }
@@ -215,7 +214,7 @@ int makeMove(Move move, Board b){
 }
 
 // Re-do moves (so reverse of makeMove)
-void takeMove(Board b) {
+void takeMove(Board& b) {
 
     b.halfMoveHistory--;
     b.halfMove--;
@@ -226,6 +225,15 @@ void takeMove(Board b) {
 
     assert(checkInsideBoard(from));
     assert(checkInsideBoard(to));
+
+    if (b.enPassantSquare != NO_SQ) {
+        b.hash_en_passant();
+    }
+    b.hash_castling_key();
+
+    b.castlingKey = b.history[b.halfMoveHistory].castlingKey;
+    b.fiftyMove = b.history[b.halfMoveHistory].fiftyMove;
+    b.enPassantSquare = b.history[b.halfMoveHistory].enPassantSquare;
 
     if (b.enPassantSquare != NO_SQ) {
         b.hash_en_passant();

@@ -76,7 +76,7 @@ U64 Move::createMoveBits(int fromSq,int toSq,int captured,int enPassant,int pawn
     return ( (fromSq) | (toSq << 7) | ( captured << 14) | (enPassant << 18) | (pawnStart << 19) | (promoted << 20) | (castle << 24));
 }
 
-std::vector<Move> Move::generateWhitePawnMove(int pawnSq120,Board b){
+std::vector<Move> Move::generateWhitePawnMove(int pawnSq120, Board b){
 
     assert (checkInsideBoard(pawnSq120));
     std::vector<Move> possible_moves;
@@ -103,7 +103,7 @@ std::vector<Move> Move::generateWhitePawnMove(int pawnSq120,Board b){
 
             // need to be inside this because rank + 10 need to be empty to be able to move forward 2 square
             if(getRankFromSq120(pawnSq120) == 2 && b.pieces[pawnSq120 + 20] == EMPTY){
-                U64 movebits = createMoveBits(pawnSq120,pawnSq120+20,0,0,0,0,0);
+                U64 movebits = createMoveBits(pawnSq120,pawnSq120+20,0,0,1,0,0);
                 possible_moves.push_back(Move(movebits));
             }
         }
@@ -166,17 +166,6 @@ std::vector<Move> Move::generateWhitePawnMove(int pawnSq120,Board b){
 
     return possible_moves;
 
-    /*
-    #define MFLAGEP 0x40000
-    #define MFLAGPS 0x80000
-    #define MFLAGCA 0x1000000
-
-    #define MFLAGCAP 0x7C000
-    #define MFLAGPROM 0xF00000
-
-
-    */
-    
 }
 
 std::vector<Move> Move::generateBlackPawnMove(int pawnSq120,Board b){
@@ -206,7 +195,7 @@ std::vector<Move> Move::generateBlackPawnMove(int pawnSq120,Board b){
 
             // need to be inside this because rank + 10 need to be empty to be able to move forward 2 square
             if(getRankFromSq120(pawnSq120) == 7 && b.pieces[pawnSq120 - 20] == EMPTY){
-                U64 movebits = createMoveBits(pawnSq120,pawnSq120-20,0,0,0,0,0);
+                U64 movebits = createMoveBits(pawnSq120,pawnSq120-20,0,0,1,0,0);
                 possible_moves.push_back(Move(movebits));
             }
         }
@@ -269,19 +258,7 @@ std::vector<Move> Move::generateBlackPawnMove(int pawnSq120,Board b){
 
     return possible_moves;
 
-    /*
-    #define MFLAGEP 0x40000
-    #define MFLAGPS 0x80000
-    #define MFLAGCA 0x1000000
-
-    #define MFLAGCAP 0x7C000
-    #define MFLAGPROM 0xF00000
-
-
-    */
-    
 }
-
 
 std::vector<Move> Move::generatePawnMoves(Board b){
 
@@ -323,7 +300,6 @@ std::vector<Move> Move::generateLoopPieceMoves(Board b){
             int curPieceNum = b.pieceNum[cur_piece];
             for (int i = 0 ; i < curPieceNum ; i++){
                 int curSq = b.pieceList[cur_piece][i];
-                //std::cout << "Piece " << cur_piece << " " << i << " " << all_moves.size() << '\n';
                 for (int j = 0 ; j < numDir[cur_piece];j++){
                     int dir = pceDir[cur_piece][j];
                     int sqAfter = curSq + dir;
@@ -379,8 +355,6 @@ std::vector<Move> Move::generateLoopPieceMoves(Board b){
                         sqAfter += dir;
                     }
                 }
-
-
             }
         }
         
@@ -410,7 +384,7 @@ std::vector<Move> Move::generateNonLoopPieceMoves(Board b){
             int curPieceNum = b.pieceNum[cur_piece];
             for (int i = 0 ; i < curPieceNum ; i++){
                 int curSq = b.pieceList[cur_piece][i];
-                //std::cout << "Piece " << cur_piece << " " << i << " " << all_moves.size() << '\n';
+                
                 for (int j = 0 ; j < numDir[cur_piece];j++){
                     int dir = pceDir[cur_piece][j];
                     int sqAfter = curSq + dir;
@@ -547,7 +521,7 @@ std::vector<Move> Move::generateAllMoves(Board b){
     return all_moves;
 }
 
-void Move::move_format_print(){
+void Move::print(){
 
     int fromSq120 = fromSq();
     int toSq120 = toSq();
@@ -573,5 +547,5 @@ void Move::move_format_print(){
     // std::string casStr = std::string(1,cas);
     
 
-    std::cout << "FromSq:" << fromSqStr << " toSqStr:" << toSqStr << " cap:" << caps << " eP:" << enPas << " pS:" << pS << " promStr:" << promStr << " casStr:" << cas << "\n";
+    std::cout << "FromSq:" << fromSqStr << " toSqStr:" << toSqStr << " cap:" << caps << " eP:" << enPas << " pS:" << pS << " promStr:" << promStr << " casStr:" << cas ;
 }
