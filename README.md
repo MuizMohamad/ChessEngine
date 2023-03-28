@@ -32,5 +32,7 @@ Move formatting - DONE
   castling - DONE  
   all moves generation - DONE  
   
-### Make Move / Take Move - IN PROGRESS
+### Make Move / Take Move - DONE  
+  
+### Perft Testing - IN PROGRESS  
  
