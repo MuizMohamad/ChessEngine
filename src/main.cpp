@@ -26,19 +26,24 @@ int main(){
     std::string fenTestCastle1Moves = "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1";
     std::string fenTestCastle2Moves =  "3rk2r/8/8/8/8/8/6p1/R3K2R b KQk - 0 1";
 
-    b.parseFEN(fenTestCastle1Moves);
-
-    // REMEMBER sq attacks turn is defending side
+    // b.parseFEN(fenTestCastle1Moves);
+    // // REMEMBER sq attacks turn is defending side
     
-    b.print_board();
-    // std::cout << b.squareAttacked(D5,BLACK);
-    //b.printCharPieceAtSq120(D3);
-    
-    std::vector<Move> test = Move::generateCastlingMoves(b);
-    std::cout << "How many moves: "<< test.size() << "\n";
+    // b.print_board();
 
-    for (Move m : test){
-        m.move_format_print();
-    }
+    // std::vector<Move> test = Move::generateCastlingMoves(b);
+    // std::cout << "How many moves: "<< test.size() << "\n";
+
+    // for (Move m : test){
+    //     m.move_format_print();
+    // }
+
+    // std::string fenTestFinal = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1";
+
+    // Board b2;
+    // b2.parseFEN(fenTestFinal);
+    // std::vector<Move> test2 = Move::generateAllMoves(b2);
+    // std::cout << "Final: "<< test2.size() << "\n";
+
     return 0;
 }

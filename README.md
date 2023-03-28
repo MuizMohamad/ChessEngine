@@ -12,9 +12,8 @@ https://www.chessprogramming.org/Main_Page
 ## Project Status
 
 This project is currently in early development.  
-Currently setting up move generation.
-Project build are not being set up currently since chess programming aspect are being prioritized  
-
+Currently setting up making move.
+ 
 ## PROGRESS  
 Board representation - DONE  
 Parse FEN - DONE 

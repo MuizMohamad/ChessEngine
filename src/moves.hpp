@@ -35,6 +35,7 @@ class Move{
 
     public :
 
+        Move();
         Move(U64 movebits);
 
         static const std::vector<int> loopPieces ;
@@ -47,18 +48,21 @@ class Move{
         static const std::vector<int> numDir;
 
         // get something from field
-        int fromSq();
-        int toSq();
+        int fromSq(); // in sq120
+        int toSq(); // in sq120
         int captured();
         int enPassant();
         int pawnStart();
         int promoted();
         int castle();
-    
-        static U64 createMoveBits(int fromSq,int toSq,int captured,int enPassant,int pawnStart,int promoted,int castle);
+
+        int getMoves();
         
         void move_format_print();
-        
+
+        // static functions
+        static U64 createMoveBits(int fromSq,int toSq,int captured,int enPassant,int pawnStart,int promoted,int castle);
+
         static std::vector<Move> generateWhitePawnMove(int pawnSq64,Board b);
         static std::vector<Move> generateBlackPawnMove(int pawnSq64,Board b);
         static std::vector<Move> generatePawnMoves(Board b); // general all pawns

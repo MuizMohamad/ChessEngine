@@ -4,11 +4,10 @@
 #include "defs.hpp"
 #include "helper.hpp"
 #include "validation.hpp"
-#include "hashkeys.hpp"
+#include "undo.hpp"
 
-// class Board or in another words chess 'position'
-class Board{
-
+// class Board or in another words chess 'positions'
+class Board {
 
     public:
         // Put each piece location in square based on enum
@@ -26,22 +25,26 @@ class Board{
         // material value for both sides 0 - white , 1 - black
         int materialValue[2];
 
-
-        U64 enPassantSquare; // en Passant square (sq 120)
-        U64 turn; // 0 for white , 1 for black
+        int enPassantSquare; // en Passant square (sq 120)
+        int turn; // 0 for white , 1 for black
 
         // castling permission
         // 0000 : 4th bit - black can castle queen, 3rd bit - black can castle king, 2nd -, white castle queen , 1st - white castle king
-        U64 castlingKey; 
+        int castlingKey; 
 
         // current number of moves, eg after 1 c4 , current total move is 1
         int fullMove;
 
-        // number of completed moves since last pawn capture
+        // number of completed moves since last pawn capture or PLY
         int halfMove;
+        
+        int fiftyMove;
 
         U64 position_key;
 
+        int halfMoveHistory;
+        Undo history[MAX_GAME_MOVES];
+    
     public:
 
         Board();
@@ -54,6 +57,7 @@ class Board{
         // helper functions
         void updateListsMaterial();
         int getPieceAtSq64(int square);
+        int getKingSquare(int side);
 
         // functional functions
         void parseFEN(std::string fen);
@@ -63,6 +67,15 @@ class Board{
         void print_board();
         void printCharPieceAtSq120(int sq120);
         void printCharPieceAtSq64(int sq64);
+
+        void hash_piece(int piece, int sq120);
+        void hash_castling_key();
+        void hash_side();
+        void hash_en_passant();
+
+        // Static functions to calculate hash keys
+        static U64 generatePositionKeys(Board b);
+
 };
 
 

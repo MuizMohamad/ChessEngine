@@ -18,6 +18,7 @@ typedef unsigned long long U64;
 
 // constant size
 const int BOARD_SQ_NUM = 120;
+const int MAX_GAME_MOVES = 2048;
 
 // enum
 enum { EMPTY = 0, wP , wN , wB , wR , wQ , wK , bP , bN , bB , bR , bQ , bK };
@@ -85,4 +86,4 @@ extern U64 PieceKeys[13][120];
 extern U64 SideKey;
 extern U64 CastleKeys[16];
 
-extern int pieceValue[13];
+extern int PieceValue[13];

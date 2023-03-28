@@ -12,7 +12,7 @@ Board::Board(){
     // 1111 for castling
     castlingKey = 15;
 
-    
+    fiftyMove = 0;
 
     empty_board();
     init_pieces();
@@ -213,6 +213,16 @@ void Board::print_board(){
     std::cout << "--------\n";
 }
 
+// get square 120 of king with side
+int Board::getKingSquare(int side){
+    if (side == WHITE){
+        return this->pieceList[wK][0];
+    }
+    else {
+        return this->pieceList[bK][0];
+    }
+}
+
 int Board::getPieceAtSq64(int sq64){
 
     //return piecesInSq64[square];
@@ -270,31 +280,31 @@ void Board::parseFEN(std::string fen){
 
     // white can castle kingside
     if (castling_status.find('K') != std::string::npos){
-        setNthBitFromNumber(&castlingKey,0);
-    }
-    else {
-        clearNthBitFromNumber(&castlingKey,0);
-    }
-
-    // white can castle queenside
-    if (castling_status.find('Q') != std::string::npos){
         setNthBitFromNumber(&castlingKey,1);
     }
     else {
         clearNthBitFromNumber(&castlingKey,1);
     }
 
-    // black can castle kingside
-    if (castling_status.find('k') != std::string::npos){
+    // white can castle queenside
+    if (castling_status.find('Q') != std::string::npos){
         setNthBitFromNumber(&castlingKey,2);
     }
     else {
         clearNthBitFromNumber(&castlingKey,2);
     }
 
+    // black can castle kingside
+    if (castling_status.find('k') != std::string::npos){
+        setNthBitFromNumber(&castlingKey,3);
+    }
+    else {
+        clearNthBitFromNumber(&castlingKey,3);
+    }
+
     // black can castle queenside
     if (castling_status.find('K') != std::string::npos){
-        setNthBitFromNumber(&castlingKey,3);
+        setNthBitFromNumber(&castlingKey,4);
     }
     else {
         clearNthBitFromNumber(&castlingKey,4);
@@ -316,11 +326,13 @@ void Board::parseFEN(std::string fen){
     // parse full-move
     fullMove = std::stoi(fen_split[5]);
 
-    position_key = generatePositionKeys(this);
+    position_key = Board::generatePositionKeys(*this);
 
     // update list materials
     updateListsMaterial();
 }
+
+
 
 // check based on the defending side,
 // that is if E4 with defending side white, then check if black piece attack the square E4
@@ -440,9 +452,58 @@ void Board::updateListsMaterial() {
 		    // if( PieceMin[piece] == TRUE) pos->minPce[colour]++;
 		    // if( PieceMaj[piece] == TRUE) pos->majPce[colour]++;
 			
-			materialValue[colour] += pieceValue[piece];
+			materialValue[colour] += PieceValue[piece];
 		}
 	}
 }
+
+void Board::hash_piece(int piece, int sq120){
+    (this->position_key ^= (PieceKeys[piece][sq120]));
+}
+
+void Board::hash_castling_key(){
+    (this->position_key ^= (CastleKeys[(this->castlingKey)]));
+}
+
+void Board::hash_side(){
+    (this->position_key ^= (SideKey));
+}
+void Board::hash_en_passant(){
+    (this->position_key ^= (PieceKeys[EMPTY][(this->enPassantSquare)]));
+}
+
+U64 Board::generatePositionKeys(Board b) {
+
+	int sq = 0;
+	U64 finalKey = 0;
+	int piece = EMPTY;
+	
+	// pieces
+	for(sq = 0; sq < BOARD_SQ_NUM; ++sq) {
+		piece = b.pieces[sq];
+		if(piece!=NO_SQ && piece!=EMPTY) {
+			assert(piece>=wP && piece<=bK);
+			finalKey ^= PieceKeys[piece][sq];
+		}		
+	}
+	
+	if(b.turn == WHITE) {
+		finalKey ^= SideKey;
+	}
+		
+	if(b.enPassantSquare != NO_SQ) {
+		assert(b.enPassantSquare>=0 && b.enPassantSquare<BOARD_SQ_NUM);
+		finalKey ^= PieceKeys[EMPTY][b.enPassantSquare];
+	}
+	
+    std::cout << b.castlingKey << "\n";
+
+	assert(b.castlingKey>=0 && b.castlingKey<=15);
+	
+	finalKey ^= CastleKeys[b.castlingKey];
+	
+	return finalKey;
+}
+
 
 

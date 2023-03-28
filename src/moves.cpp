@@ -27,8 +27,16 @@ const std::vector<std::vector<int>> Move::pceDir = {
 
 const std::vector<int> Move::numDir = { 0, 0, 8, 4, 4, 8, 8, 0, 8, 4, 4, 8, 8};
 
+Move::Move(){
+    moves = 0;
+}
+
 Move::Move(U64 movebits){
     moves = movebits;
+}
+
+int Move::getMoves(){
+    return this->moves;
 }
 
 int Move::fromSq(){
