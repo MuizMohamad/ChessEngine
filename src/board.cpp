@@ -356,7 +356,12 @@ bool Board::squareAttacked(int sq120, int defending_side){
     for (int direction : diagonal_direction){
         
         int cur_sq = sq120;
-        while(checkInsideBoard(cur_sq + direction) && pieces[cur_sq+direction] != EMPTY){
+
+        while(checkInsideBoard(cur_sq + direction) && pieces[cur_sq+direction] == EMPTY){
+            cur_sq = cur_sq + direction;
+        }
+        
+        if (checkInsideBoard(cur_sq + direction) && pieces[cur_sq+direction] != EMPTY){
             cur_sq = cur_sq + direction;
         }
 
@@ -373,7 +378,14 @@ bool Board::squareAttacked(int sq120, int defending_side){
     for (int direction : horizontal_direction){
         
         int cur_sq = sq120;
-        while(checkInsideBoard(cur_sq + direction) && pieces[cur_sq+direction] != EMPTY){
+
+
+
+        while(checkInsideBoard(cur_sq + direction) && pieces[cur_sq+direction] == EMPTY){
+            cur_sq = cur_sq + direction;
+        }
+
+        if (checkInsideBoard(cur_sq + direction) && pieces[cur_sq+direction] != EMPTY){
             cur_sq = cur_sq + direction;
         }
 

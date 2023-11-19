@@ -6,6 +6,11 @@ void clearPiece(const int sq120, Board& b){
 
     int piece = b.pieces[sq120];
     
+    if (!checkPieceValid(piece)){
+        std::cout << "Invalid piece : " << sq64ToSqStr(Sq120_to_Sq64[sq120]) << " \n";
+        b.print_board();
+    }
+
     assert(checkPieceValid(piece));
 
     // color / side
@@ -99,7 +104,7 @@ int makeMove(Move move, Board& b){
     int from = move.fromSq();
     int to = move.toSq();
     int side = b.turn;
-
+    
     assert(checkInsideBoard(from));
     assert(checkInsideBoard(to));
     assert(checkValidSide(side));
@@ -109,10 +114,15 @@ int makeMove(Move move, Board& b){
 
     // enPassant
     if (move.enPassant()){
+        // std::cout << "TEST" << "\n";
+        // b.print_board();
+        // std::cout << "TESTEND" << "\n";
         if (side == WHITE){
+            //std::cout << "called from here 1" << "\n";
             clearPiece(to-10,b); // clear piece at behind (en passant)
         }
         else {
+            //std::cout << "called from here 2" << "\n";
             clearPiece(to+10,b);
         }
     }
@@ -165,6 +175,7 @@ int makeMove(Move move, Board& b){
 
     if (captured != EMPTY){
         assert(checkPieceValid(captured));
+        //std::cout << "Call from here 3" << "\n";
         clearPiece(to, b);
         b.fiftyMove = 0;
     }

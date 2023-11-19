@@ -61,7 +61,7 @@ class Board {
 
         // functional functions
         void parseFEN(std::string fen);
-        bool squareAttacked(int square, int attacking_side);
+        bool squareAttacked(int square, int defending_side);
 
         // printing functions
         void print_board();

@@ -153,14 +153,15 @@ std::vector<Move> Move::generateWhitePawnMove(int pawnSq120, Board b){
     }
     
     // enPassant on opposite pawn (black pawn)
+    // captured = NO_PIECE, because enPassant
     if (checkInsideBoard(pawnSq120 + 9) && b.enPassantSquare == pawnSq120 + 9 ){
-        U64 movebits = createMoveBits(pawnSq120,pawnSq120+9,bP,1,0,0,0);
+        U64 movebits = createMoveBits(pawnSq120,pawnSq120+9,0,1,0,0,0);
         possible_moves.push_back(Move(movebits));
 
     }
 
     if (checkInsideBoard(pawnSq120 + 11) && b.enPassantSquare == pawnSq120 + 11 ){
-        U64 movebits = createMoveBits(pawnSq120,pawnSq120+11,bP,1,0,0,0);
+        U64 movebits = createMoveBits(pawnSq120,pawnSq120+11,0,1,0,0,0);
         possible_moves.push_back(Move(movebits));
     }
 
@@ -245,14 +246,15 @@ std::vector<Move> Move::generateBlackPawnMove(int pawnSq120,Board b){
     }
     
     // enPassant on opposite pawn (black pawn)
+    // captured = NO_PIECE, because enPassant
     if (checkInsideBoard(pawnSq120 - 9) && b.enPassantSquare == pawnSq120 - 9 ){
-        U64 movebits = createMoveBits(pawnSq120,pawnSq120-9,wP,1,0,0,0);
+        U64 movebits = createMoveBits(pawnSq120,pawnSq120-9,0,1,0,0,0);
         possible_moves.push_back(Move(movebits));
 
     }
 
     if (checkInsideBoard(pawnSq120 - 11) && b.enPassantSquare == pawnSq120 - 11 ){
-        U64 movebits = createMoveBits(pawnSq120,pawnSq120-11,wP,1,0,0,0);
+        U64 movebits = createMoveBits(pawnSq120,pawnSq120-11,0,1,0,0,0);
         possible_moves.push_back(Move(movebits));
     }
 
@@ -487,7 +489,7 @@ std::vector<Move> Move::generateCastlingMoves(Board b){
             }
         }
         if (bqueen_castle){
-            if (b.pieces[D1] == EMPTY && b.pieces[C1] == EMPTY && b.pieces[B1] == EMPTY){
+            if (b.pieces[D8] == EMPTY && b.pieces[C8] == EMPTY && b.pieces[B8] == EMPTY){
                 if(!b.squareAttacked(E8,BLACK) && !b.squareAttacked(D8,BLACK)){
                     U64 movebits = createMoveBits(E8,C8,0,0,0,0,1);
                     all_moves.push_back(Move(movebits)); 
@@ -511,6 +513,7 @@ std::vector<Move> Move::generateAllMoves(Board b){
     all_moves.insert(all_moves.end(), all_moves_non_loop.begin(), all_moves_non_loop.end());
 
     // generate loop pieces moves
+    
     std::vector<Move> all_moves_loop =  generateLoopPieceMoves(b);
     all_moves.insert(all_moves.end(), all_moves_loop.begin(), all_moves_loop.end());
 

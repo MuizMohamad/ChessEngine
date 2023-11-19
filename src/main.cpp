@@ -31,7 +31,10 @@ int main(){
     Board b;
     b.parseFEN(perft_fen);
 
-    PerftTest(4, b);
-    
+    //PerftTest(1, b);
+    PerftTest(5, b);
+    // PerftTest(3, b);
+    // PerftTest(4, b);
+
     return 0;
 }
