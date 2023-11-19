@@ -7,7 +7,7 @@
 #include "makemove.hpp"
 #include "perft.hpp"
 
-// g++ helper.cpp validation.cpp board.cpp init.cpp moves.cpp main.cpp -o chessengine
+// g++ helper.cpp validation.cpp board.cpp init.cpp moves.cpp perft.cpp makemove.cpp main.cpp -o chessengine
 
 // FEN board position for testing
 
