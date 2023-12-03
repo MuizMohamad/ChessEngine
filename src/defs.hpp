@@ -8,6 +8,7 @@
 #include <string>
 #include <cstring>
 #include <sstream>
+#include <fstream>
 #include <cassert>
 #include <math.h>
 #include <algorithm>

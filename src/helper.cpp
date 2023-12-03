@@ -164,6 +164,7 @@ int getRankFromSq120(int sq120){
     return floor(sq120/10) - 1;
 }
 
+
 /**
 bool is_valid_fen(const std::string &fen) {
    std::istringstream iss(fen);

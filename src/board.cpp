@@ -503,8 +503,6 @@ U64 Board::generatePositionKeys(Board b) {
 		finalKey ^= PieceKeys[EMPTY][b.enPassantSquare];
 	}
 	
-    std::cout << b.castlingKey << "\n";
-
 	assert(b.castlingKey>=0 && b.castlingKey<=15);
 	
 	finalKey ^= CastleKeys[b.castlingKey];
