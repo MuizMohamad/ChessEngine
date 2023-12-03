@@ -122,8 +122,8 @@ void perftUnitTest(int depth){
                 std::cout << "Line " << line << " ,FEN: [" << fen << "], Depth " << depth << " : FAILED (Actual: " << actual << ", Expected: " << expected << ")\n" ;  
             }
 
-            
- 
         }          
     }
+
+    std::cout << "-------------------------\nTest completed\n-------------------------"
 }

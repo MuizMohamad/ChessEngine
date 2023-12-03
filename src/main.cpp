@@ -29,21 +29,23 @@ std::string pos4 = "r3k2r/Pppp1ppp/1b3nbN/nP6/BBP1P3/q4N2/Pp1P2PP/R2Q1RK1 w kq -
 std::string pos5 = "rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R w KQ - 1 8";
 std::string pos6 = "r4rk1/1pp1qppp/p1np1n2/2b1p1B1/2B1P1b1/P1NP1N2/1PP1QPPP/R4RK1 w - - 0 10";
 
+std::string debugPos = "4k3/8/8/8/8/8/8/4K2R b K - 0 1";
+
 int main(){
 
     InitAll();
     
     //std::string perft_fen = START_FEN;
-    std::string perft_fen = pos6;
+    
+    perftUnitTest(5);
+    
+    std::string perft_fen = debugPos;
 
     Board b;
     b.parseFEN(perft_fen);
 
-    perftUnitTest(1);
+    //std::cout << "FEN : "<< perft_fen << "\n";
     //PerftTest(1, b);
-    // PerftTest(5, b);
-    // PerftTest(3, b);
-    // PerftTest(4, b);
 
     return 0;
 }

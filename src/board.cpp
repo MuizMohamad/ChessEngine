@@ -303,7 +303,7 @@ void Board::parseFEN(std::string fen){
     }
 
     // black can castle queenside
-    if (castling_status.find('K') != std::string::npos){
+    if (castling_status.find('q') != std::string::npos){
         setNthBitFromNumber(&castlingKey,4);
     }
     else {
