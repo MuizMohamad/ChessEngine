@@ -1,4 +1,3 @@
-#define NDEBUG
 
 #include "defs.hpp"
 #include "init.hpp"
@@ -41,7 +40,7 @@ int main(){
     b.parseFEN(perft_fen);
 
     //PerftTest(1, b);
-    PerftTest(4, b);
+    PerftTest(5, b);
     // PerftTest(3, b);
     // PerftTest(4, b);
 
