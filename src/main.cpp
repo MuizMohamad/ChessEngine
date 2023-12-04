@@ -37,7 +37,7 @@ int main(){
     
     //std::string perft_fen = START_FEN;
     
-    perftUnitTest(5);
+    perftUnitTest(6);
     
     std::string perft_fen = debugPos;
 

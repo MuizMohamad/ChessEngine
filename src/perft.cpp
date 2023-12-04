@@ -91,7 +91,7 @@ void perft(int depth, std::string fen){
 
 void perftUnitTest(int depth){
     
-    std::cout << "-------------------------\nPerft Test running\n-------------------------\nDisplaying failed results only\n-------------------------\n";
+    std::cout << "-------------------------\nPerft Test running at Depth: " << depth << "\n-------------------------\nDisplaying failed results only\n-------------------------\n";
 
     std::ifstream perftFile("perftsuite.epd");
     std::string currentLine;
@@ -121,9 +121,12 @@ void perftUnitTest(int depth){
             if (actual != expected){
                 std::cout << "Line " << line << " ,FEN: [" << fen << "], Depth " << depth << " : FAILED (Actual: " << actual << ", Expected: " << expected << ")\n" ;  
             }
+            else {
+                std::cout << "Line " << line << " : PASSED \n";
+            }
 
         }          
     }
 
-    std::cout << "-------------------------\nTest completed\n-------------------------"
+    std::cout << "-------------------------\nTest completed\n-------------------------";
 }
