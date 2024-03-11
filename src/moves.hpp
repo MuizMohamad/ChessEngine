@@ -6,7 +6,7 @@
 #include "helper.hpp"
 #include "validation.hpp"
 
-class Move{
+class Move {
 
     /*
     Move formatting in one U64
@@ -57,7 +57,8 @@ class Move{
         int castle();
 
         int getMoves();
-        
+        bool noMoves();
+
         void print();
 
         // static functions
@@ -73,5 +74,7 @@ class Move{
         static std::vector<Move> generateCastlingMoves(Board b);
 
         static std::vector<Move> generateAllMoves(Board b);
+
+        static Move fetchMoveFromInput(std::string input);
   
 };

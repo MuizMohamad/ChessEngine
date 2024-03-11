@@ -35,6 +35,10 @@ Move::Move(U64 movebits){
     moves = movebits;
 }
 
+bool Move::noMoves(){
+    return moves == 0;
+}
+
 int Move::getMoves(){
     return this->moves;
 }
@@ -551,4 +555,12 @@ void Move::print(){
     
 
     std::cout << "FromSq:" << fromSqStr << " toSqStr:" << toSqStr << " cap:" << caps << " eP:" << enPas << " pS:" << pS << " promStr:" << promStr << " casStr:" << cas ;
+}
+
+static Move fetchMoveFromInput(std::string input){
+    
+    Move move = Move(); //set to NoMoves
+
+    return move;
+
 }

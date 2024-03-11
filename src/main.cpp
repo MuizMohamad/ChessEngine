@@ -43,7 +43,7 @@ int main(){
 
     Board b;
     b.parseFEN(perft_fen);
-
+        
     //std::cout << "FEN : "<< perft_fen << "\n";
     //PerftTest(1, b);
 
