@@ -35,14 +35,37 @@ int main(){
 
     InitAll();
     
-    //std::string perft_fen = START_FEN;
+    std::string perft_fen = START_FEN;
     
-    perftUnitTest(6);
+    // perftUnitTest(6);
     
-    std::string perft_fen = debugPos;
+    // std::string perft_fen = debugPos;
 
     Board b;
-    b.parseFEN(perft_fen);
+
+    while(true){
+
+        b.print_board();
+        std::cout << "Enter a move:" << "\n";
+
+        std::string user_input;
+        std::cin >> user_input;
+
+        if (user_input[0] == 'q'){
+            break;
+        }
+        else if (user_input[0] == 't'){
+            takeMove(b);
+        }
+        else {
+            Move move = Move::parseUserMove(user_input,b);
+            if (!move.noMoves()){
+                makeMove(move,b);
+            }
+        }
+
+    }
+    
         
     //std::cout << "FEN : "<< perft_fen << "\n";
     //PerftTest(1, b);

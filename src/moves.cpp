@@ -557,10 +557,50 @@ void Move::print(){
     std::cout << "FromSq:" << fromSqStr << " toSqStr:" << toSqStr << " cap:" << caps << " eP:" << enPas << " pS:" << pS << " promStr:" << promStr << " casStr:" << cas ;
 }
 
-static Move fetchMoveFromInput(std::string input){
-    
-    Move move = Move(); //set to NoMoves
+Move Move::parseUserMove(std::string user_input, Board b){
 
-    return move;
+    Move noMove = Move();
+
+    if (int(user_input[0]) > int('h') && int(user_input[0]) < int('a')){
+        return noMove;
+    }
+    if (int(user_input[2]) > int('h') && int(user_input[2]) < int('a')){
+        return noMove;
+    }
+    if (int(user_input[1]) > int('8') && int(user_input[1]) < int('1')){
+        return noMove;
+    }
+    if (int(user_input[3]) > int('8') && int(user_input[3]) < int('1')){
+        return noMove;
+    }
+
+    int fromSq = Sq64_to_Sq120[sqStrToSq64(user_input.substr(0,2))];
+    int toSq = Sq64_to_Sq120[sqStrToSq64(user_input.substr(2,2))];
+
+    std::vector<Move> allMoves = generateAllMoves(b);
+
+    for (Move move : allMoves){
+        if (move.fromSq() == fromSq && move.toSq() == toSq){
+            int promotedPiece = move.promoted();
+            if (promotedPiece != EMPTY){
+                if ((promotedPiece == wR || promotedPiece == bR) && user_input[4] == 'r'){
+                    return move;
+                }
+                if ((promotedPiece == wB || promotedPiece == bB) && user_input[4] == 'b'){
+                    return move;
+                }
+                if ((promotedPiece == wQ || promotedPiece == bQ) && user_input[4] == 'q'){
+                    return move;
+                }
+                if ((promotedPiece == wN || promotedPiece == bN) && user_input[4] == 'n'){
+                    return move;
+                }
+                continue;
+            }
+            return move;
+        }
+    }
+
+    return noMove;
 
 }

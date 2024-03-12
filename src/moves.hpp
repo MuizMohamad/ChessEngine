@@ -75,6 +75,5 @@ class Move {
 
         static std::vector<Move> generateAllMoves(Board b);
 
-        static Move fetchMoveFromInput(std::string input);
-  
+        static Move parseUserMove(std::string user_input, Board b);
 };
