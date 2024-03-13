@@ -3,7 +3,7 @@
 
 Board::Board(){
     
-    enPassantSquare = 0;
+    enPassantSquare = NO_SQ;
     turn = WHITE;
 
     fullMove = 0;
@@ -15,7 +15,7 @@ Board::Board(){
     fiftyMove = 0;
 
     init_pieces();
-    position_key = generatePositionKeys(this);
+    position_key = generatePositionKeys(*this);
 }
 
 void Board::resetListValues(){
@@ -74,8 +74,6 @@ void Board::init_pieces(){
         pieceNum[bP] += 1;
     }
     
-    
-
     // initiate knight
     for (int i = 0 ; i < 2 ; i++){
 
@@ -95,7 +93,6 @@ void Board::init_pieces(){
         pieceNum[bN] += 1;
     }
 
-    
     // initiate bishop
     for (int i = 0 ; i < 2 ; i++){
 
@@ -438,6 +435,16 @@ bool Board::squareAttacked(int sq120, int defending_side){
      return false;
 }
 
+bool Board::checkRepetition(){
+
+    for (int i = 0 ; i < MAX_GAME_MOVES; i++){
+        if (this->history[i].position_key == this->position_key){
+            return true;
+        }
+    }
+
+    return false;
+}
 
 void Board::updateListsMaterial() {	
 	
@@ -461,18 +468,18 @@ void Board::updateListsMaterial() {
 }
 
 void Board::hash_piece(int piece, int sq120){
-    (this->position_key ^= (PieceKeys[piece][sq120]));
+    this->position_key ^= (PieceKeys[piece][sq120]);
 }
 
 void Board::hash_castling_key(){
-    (this->position_key ^= (CastleKeys[(this->castlingKey)]));
+    this->position_key ^= (CastleKeys[(this->castlingKey)]);
 }
 
 void Board::hash_side(){
-    (this->position_key ^= (SideKey));
+    this->position_key ^= (SideKey);
 }
 void Board::hash_en_passant(){
-    (this->position_key ^= (PieceKeys[EMPTY][(this->enPassantSquare)]));
+    this->position_key ^= (PieceKeys[EMPTY][(this->enPassantSquare)]);
 }
 
 U64 Board::generatePositionKeys(Board b) {

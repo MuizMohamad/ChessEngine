@@ -50,7 +50,9 @@ void InitHashKeys() {
 			PieceKeys[index][index2] = RAND_64;
 		}
 	}
+
 	SideKey = RAND_64;
+	
 	for(index = 0; index < 16; ++index) {
 		CastleKeys[index] = RAND_64;
 	}

@@ -46,6 +46,7 @@ int main(){
     while(true){
 
         b.print_board();
+        std::cout << "Pos key: " << b.position_key << "\n";
         std::cout << "Enter a move:" << "\n";
 
         std::string user_input;
@@ -60,8 +61,17 @@ int main(){
         else {
             Move move = Move::parseUserMove(user_input,b);
             if (!move.noMoves()){
+                move.print();
                 makeMove(move,b);
             }
+            else {
+                std::cout << "Move not parsed. " << "\n";
+            }
+
+            if (b.checkRepetition()){
+                std::cout << "Repetition detected. " << "\n";
+            }
+            
         }
 
     }

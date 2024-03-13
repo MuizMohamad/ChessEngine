@@ -114,15 +114,10 @@ int makeMove(Move move, Board& b){
 
     // enPassant
     if (move.enPassant()){
-        // std::cout << "TEST" << "\n";
-        // b.print_board();
-        // std::cout << "TESTEND" << "\n";
         if (side == WHITE){
-            //std::cout << "called from here 1" << "\n";
             clearPiece(to-10,b); // clear piece at behind (en passant)
         }
         else {
-            //std::cout << "called from here 2" << "\n";
             clearPiece(to+10,b);
         }
     }

@@ -62,7 +62,8 @@ class Board {
         // functional functions
         void parseFEN(std::string fen);
         bool squareAttacked(int square, int defending_side);
-
+        bool checkRepetition();
+        
         // printing functions
         void print_board();
         void printCharPieceAtSq120(int sq120);
@@ -75,6 +76,7 @@ class Board {
 
         // Static functions to calculate hash keys
         static U64 generatePositionKeys(Board b);
+        
 
 };
 
