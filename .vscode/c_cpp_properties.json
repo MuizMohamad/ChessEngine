@@ -3,14 +3,16 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/usr/include/x86_64-linux-gnu/c++/9",
+                "/usr/include/x86_64-linux-gnu"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "C:\\MinGW\\bin\\gcc.exe",
+            "compilerPath": "/usr/bin/g++",
             "cStandard": "gnu11",
             "cppStandard": "gnu++14",
             "intelliSenseMode": "windows-gcc-x86",
