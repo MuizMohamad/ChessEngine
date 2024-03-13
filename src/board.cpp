@@ -14,9 +14,8 @@ Board::Board(){
 
     fiftyMove = 0;
 
-    empty_board();
     init_pieces();
-
+    position_key = generatePositionKeys(this);
 }
 
 void Board::resetListValues(){
@@ -25,6 +24,7 @@ void Board::resetListValues(){
         materialValue[i] = 0;
     }
 }
+
 void Board::empty_board(){
 
     // empty piece list
@@ -66,7 +66,7 @@ void Board::init_pieces(){
 
         pieces[wPawnStart[i]] = wP;
         pieces[bPawnStart[i]] = bP;
-        if (wPawnStart[i] == 53 || bPawnStart[i] == 53) std::cout << "ayam paw" << "\n";
+
         piecesInSq64[Sq120_to_Sq64[wPawnStart[i]]] = wP;
         piecesInSq64[Sq120_to_Sq64[bPawnStart[i]]] = bP;
 
@@ -107,7 +107,7 @@ void Board::init_pieces(){
 
         pieces[wBishopStart[i]] = wB;
         pieces[bBishopStart[i]] = bB;
-        if (wBishopStart[i] == 53 || bBishopStart[i] == 53) std::cout << "ayam bis" << "\n";
+
         piecesInSq64[Sq120_to_Sq64[wBishopStart[i]]] = wB;
         piecesInSq64[Sq120_to_Sq64[bBishopStart[i]]] = bB;
 
@@ -126,15 +126,13 @@ void Board::init_pieces(){
 
         pieces[wRookStart[i]] = wR;
         pieces[bRookStart[i]] = bR;
-        if (wRookStart[i] == 53 || bRookStart[i] == 53) std::cout << "ayam rok" << "\n";
+
         piecesInSq64[Sq120_to_Sq64[wRookStart[i]]] = wR;
         piecesInSq64[Sq120_to_Sq64[bRookStart[i]]] = bR;
 
         pieceNum[wR] += 1;
         pieceNum[bR] += 1;
     }
-
-    
 
     // initiate queen
     for (int i = 0 ; i < 1 ; i++){
@@ -154,8 +152,6 @@ void Board::init_pieces(){
         pieceNum[wQ] += 1;
         pieceNum[bQ] += 1;
     }
-
-    
 
     // initiate king
     for (int i = 0 ; i < 1 ; i++){
@@ -481,12 +477,11 @@ void Board::hash_en_passant(){
 
 U64 Board::generatePositionKeys(Board b) {
 
-	int sq = 0;
 	U64 finalKey = 0;
 	int piece = EMPTY;
 	
 	// pieces
-	for(sq = 0; sq < BOARD_SQ_NUM; ++sq) {
+	for(int sq = 0; sq < BOARD_SQ_NUM; ++sq) {
 		piece = b.pieces[sq];
 		if(piece!=NO_SQ && piece!=EMPTY) {
 			assert(piece>=wP && piece<=bK);
