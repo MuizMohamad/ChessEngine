@@ -5,6 +5,7 @@
 #include "helper.hpp"
 #include "validation.hpp"
 #include "undo.hpp"
+#include "moves.hpp"
 
 // class Board or in another words chess 'positions'
 class Board {
@@ -44,7 +45,13 @@ class Board {
 
         int halfMoveHistory;
         Undo history[MAX_GAME_MOVES];
-    
+
+        // Principal Variation table to store best line
+        std::unordered_map<U64,Move> pvTable;
+
+        int searchHistory[13][BOARD_SQ_NUM];
+        int searchKillers[2][MAX_DEPTH];
+
     public:
 
         Board();

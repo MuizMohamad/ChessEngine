@@ -13,6 +13,9 @@
 #include <math.h>
 #include <algorithm>
 #include <iterator>
+#include <chrono>
+#include <ctime>  
+#include <unordered_map>
 
 // Typedef for short form
 typedef unsigned long long U64;
@@ -20,6 +23,7 @@ typedef unsigned long long U64;
 // constant size
 const int BOARD_SQ_NUM = 120;
 const int MAX_GAME_MOVES = 2048;
+const int MAX_DEPTH = 64;
 
 const std::string START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
@@ -90,3 +94,22 @@ extern U64 SideKey;
 extern U64 CastleKeys[16];
 
 extern int PieceValue[13];
+
+// structs
+
+struct {
+
+    int start_time; // start search time
+    int stop_time; // stop search time
+    int depth; 
+    int depthset; // max depth
+    int timeset; // time max
+    int movetogo; 
+    bool infinite; // never stop the search if true
+
+    long nodes;
+
+    bool quit; // if true then we end the program
+    bool stopped; // if true then we stop search
+
+} searchInfo;
