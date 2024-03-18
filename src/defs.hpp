@@ -97,7 +97,7 @@ extern int PieceValue[13];
 
 // structs
 
-struct {
+typedef struct {
 
     int start_time; // start search time
     int stop_time; // stop search time
@@ -112,4 +112,4 @@ struct {
     bool quit; // if true then we end the program
     bool stopped; // if true then we stop search
 
-} searchInfo;
+} SearchInfo;

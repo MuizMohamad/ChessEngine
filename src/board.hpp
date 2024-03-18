@@ -84,7 +84,7 @@ class Board {
         // Static functions to calculate hash keys
         static U64 generatePositionKeys(Board b);
         
-
+        
 };
 
 

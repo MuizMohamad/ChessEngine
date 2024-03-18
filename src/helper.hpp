@@ -29,3 +29,5 @@ int getRankFromSq120(int sq120);
 
 // from https://chess.stackexchange.com/questions/1482/how-do-you-know-when-a-fen-position-is-legal
 // bool is_valid_fen(const std::string &fen);
+
+// helper function for search
