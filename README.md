@@ -34,5 +34,5 @@ Move formatting - DONE
   
 ### Make Move / Take Move - DONE  
   
-### Perft Testing - IN PROGRESS  
+### Perft Testing - DONE
  
