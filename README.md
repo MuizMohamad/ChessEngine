@@ -1,6 +1,6 @@
 ## Chess Engine
 
-Chess Engine created for learning purposes to explore the world of chess programming
+Chess Engine created to explore the world of chess programming
   
 Learning resources :
 
@@ -12,7 +12,7 @@ https://www.chessprogramming.org/Main_Page
 ## Project Status
 
 This project is currently in early development.  
-Currently setting up making move.
+Currently setting up search and evaluation.
  
 ## PROGRESS  
 Board representation - DONE  
@@ -22,8 +22,8 @@ Check if a square was attacked by opposite side - DONE
 Move formatting - DONE  
   
 ### Move Generation - DONE 
-  white pawn - DONE  
-  black pawn - DONE  
+  white pawn - DONE  (including en passant)
+  black pawn - DONE  (including en passant)
   white/black knight - DONE  
   white/black king - DONE  
   white/black rook - DONE  
@@ -34,5 +34,5 @@ Move formatting - DONE
   
 ### Make Move / Take Move - DONE  
   
-### Perft Testing - DONE
+### Perft Testing - PASSED
  
