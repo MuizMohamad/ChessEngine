@@ -43,3 +43,5 @@ For instance, a more favourable pawn position would be in the center thus higher
 (https://www.chessprogramming.org/Simplified_Evaluation_Function)
 
 ### Preparation for Search function (Alpha Beta + MinMax/NegaMax Algorithm) - Done
+
+### Implementation of Search function - In Progress
