@@ -11,7 +11,7 @@ https://www.chessprogramming.org/Main_Page
 
 ## Project Status
 
-This project is currently in early development.  
+This project is currently in mid-stage development.  
 Currently setting up search and evaluation.
  
 ## PROGRESS  
@@ -35,5 +35,11 @@ Move formatting - Completed
 ### Make Move / Take Move - Done
   
 ### Perft Testing - PASSED
+
+### Position evaluation - Done
+For now, position evaluation consist of Piece-Square tables, at which the position of each pieces on the board are added. 
+For instance, a more favourable pawn position would be in the center thus higher scores are given. If the pawn are not at the center, then scores are lower.
+  
+(https://www.chessprogramming.org/Simplified_Evaluation_Function)
 
 ### Preparation for Search function (Alpha Beta + MinMax/NegaMax Algorithm) - Done
