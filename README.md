@@ -15,24 +15,25 @@ This project is currently in early development.
 Currently setting up search and evaluation.
  
 ## PROGRESS  
-Board representation - DONE  
-Parse FEN - DONE 
-Print board - DONE  
-Check if a square was attacked by opposite side - DONE  
-Move formatting - DONE  
+Board representation - Completed  
+Parse FEN - Completed
+Print board - Completed  
+Check if a square was attacked by opposite side - Completed  
+Move formatting - Completed 
   
-### Move Generation - DONE 
-  white pawn - DONE  (including en passant)
-  black pawn - DONE  (including en passant)
-  white/black knight - DONE  
-  white/black king - DONE  
-  white/black rook - DONE  
-  white/black bishop - DONE  
-  white/black queen - DONE  
-  castling - DONE  
-  all moves generation - DONE  
+### Move Generation - Completed 
+  white pawn - Done  (including en passant)
+  black pawn - Done  (including en passant)
+  white/black knight - Done  
+  white/black king - Done  
+  white/black rook - Done
+  white/black bishop - Done  
+  white/black queen - Done  
+  castling - Done
+  all moves generation - Done  
   
-### Make Move / Take Move - DONE  
+### Make Move / Take Move - Done
   
 ### Perft Testing - PASSED
- 
+
+### Preparation for Search function (Alpha Beta + MinMax/NegaMax Algorithm) - Done
