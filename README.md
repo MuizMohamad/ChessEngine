@@ -36,6 +36,12 @@ Move formatting - Completed
   
 ### Perft Testing - PASSED
 
+Perft testing are a commonly used test in chess programming that allow us to check whether the Move Generation function of the engine are working correctly.  
+An example of the test is from the starting position, white should have 20 possible moves. Thus move generation should output all the 20 moves (not just the number but the actual move in Move class).
+
+https://www.chessprogramming.org/Perft
+
+
 ### Position evaluation - Done
 For now, position evaluation consist of Piece-Square tables, at which the position of each pieces on the board are added. 
 For instance, a more favourable pawn position would be in the center thus higher scores are given. If the pawn are not at the center, then scores are lower.
